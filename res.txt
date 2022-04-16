@@ -1,0 +1,45 @@
+
+Business - https://xd.adobe.com/view/4e4866b6-cc1b-44cb-aa8d-6498dcc1e92f-1b1b/screen/a7ab34b7-3f79-4a6a-9f82-ec9699e801b3/specs/
+Promoter - https://xd.adobe.com/view/5718e1bc-e383-4758-b809-4df050133bca-024b/screen/c5dea4a9-4db0-4e8c-a7f3-c428c4a21d1d
+
+
+https://pub.dev/packages/dart_code_metrics
+
+Share Intents Plugins
+
+https://pub.dev/packages/social_share
+https://pub.dev/packages/share_plus/example
+https://pub.dev/packages/flutter_social_content_share
+https://pub.dev/packages/esys_flutter_share
+https://developers.facebook.com/docs/plugins/share-button/
+
+visit this tutorial for share intent https://www.youtube.com/watch?v=bWehAFTFc9o&t=56s
+
+Payment Integration
+
+Flutter Razorpay
+
+https://www.youtube.com/watch?v=pakLL37M6KI&t=1s
+
+https://razorpay.com/docs/payments/payment-gateway/flutter-integration/standard/
+
+
+Paytm
+https://business.paytm.com/docs/all-in-one-sdk/hybrid-apps/flutter/
+https://dashboard.paytm.com/next/activate
+
+
+
+Flutter Stripe
+https://blog.logrocket.com/exploring-stripe-flutter-sdk/
+
+https://stripe.com/docs/api/checkout/sessions?lang=cli
+
+https://business.paytm.com/docs/all-in-one-sdk/hybrid-apps/flutter/
+https://stripe.com/docs/keys
+
+
+
+
+States and Cities API 
+https://documenter.getpostman.com/view/1134062/T1LJjU52#7255f1cc-b52d-41b3-b5a4-b1197db619b5
