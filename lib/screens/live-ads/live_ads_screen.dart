@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:prmt_promoter/blocs/auth/auth_bloc.dart';
 
 import '/widgets/loading_indicator.dart';
 import '/repositories/ads/ads_repository.dart';
@@ -19,6 +20,7 @@ class LiveAdsScreen extends StatelessWidget {
       builder: (_) => BlocProvider(
         create: (context) => AdsCubit(
           adsRepository: context.read<AdsRepository>(),
+          authBloc: context.read<AuthBloc>(),
         )..fetchLiveAds(),
         child: const LiveAdsScreen(),
       ),
@@ -39,11 +41,17 @@ class LiveAdsScreen extends StatelessWidget {
         ),
       ),
       body: BlocConsumer<AdsCubit, AdsState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          print('status of ${state.status} ');
+          if (state.status == AdsStatus.adShared) {
+            Navigator.of(context).pushNamed(LiveAdsScreen.routeName);
+          }
+        },
         builder: (context, state) {
           if (state.status == AdsStatus.loading) {
             return const LoadingIndicator();
           }
+          print('status of ${state.status} ');
           return Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 10.0,
@@ -97,10 +105,18 @@ class LiveAdsScreen extends StatelessWidget {
                             trailing: GestureDetector(
                               onTap: () {
                                 showModalBottomSheet<void>(
-                                    context: context,
-                                    builder: (context) {
-                                      return ShareIntent(ad: ad);
-                                    });
+                                  context: context,
+                                  builder: (context) {
+                                    return BlocProvider(
+                                      create: (context) => AdsCubit(
+                                        adsRepository:
+                                            context.read<AdsRepository>(),
+                                        authBloc: context.read<AuthBloc>(),
+                                      ),
+                                      child: ShareIntent(ad: ad),
+                                    );
+                                  },
+                                );
                               },
 
                               //  => Navigator.of(context).pushNamed(

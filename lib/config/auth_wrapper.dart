@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '/screens/live-ads/live_ads_screen.dart';
+import '/screens/dashboard/dashboard.dart';
 import '/screens/registration/screens/registrations_screen.dart';
 import '/screens/signup/signup_screen.dart';
 import '/blocs/auth/auth_bloc.dart';
@@ -30,7 +30,8 @@ class AuthWrapper extends StatelessWidget {
             // this is first time user where their account is not created
             Navigator.of(context).pushNamed(RegistrationScreen.routeName);
           } else {
-            Navigator.of(context).pushNamed(LiveAdsScreen.routeName);
+            Navigator.of(context).pushNamed(DashBoard.routeName);
+            // Navigator.of(context).pushNamed(LiveAdsScreen.routeName);
             //Navigator.of(context).pushNamed(DashBoard.routeName);
             // Navigator.of(context).pushNamed(RegistrationScreen.routeName);
           }

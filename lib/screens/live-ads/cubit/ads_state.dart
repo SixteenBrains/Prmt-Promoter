@@ -1,6 +1,6 @@
 part of 'ads_cubit.dart';
 
-enum AdsStatus { initial, loading, succuss, error }
+enum AdsStatus { initial, loading, succuss, error, adShared }
 
 class AdsState extends Equatable {
   final List<Ad?> liveAds;

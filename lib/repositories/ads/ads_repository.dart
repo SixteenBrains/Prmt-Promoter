@@ -24,4 +24,47 @@ class AdsRepository extends BaseAdRepostory {
       throw const Failure(message: 'Error in getting live ads');
     }
   }
+
+  Future<void> promoteAd(
+      {required String? userId, required String? adId}) async {
+    try {
+      if (userId != null && adId != null) {
+        _firestore
+            .collection(Paths.promotedAds)
+            .doc(userId)
+            .collection(Paths.ads)
+            .doc(adId)
+            .set({'ad': _firestore.collection(Paths.ads).doc(adId)});
+      }
+    } catch (error) {
+      print('Error in promoting ad ${error.toString()}');
+      throw const Failure(message: 'Error in promoting');
+    }
+  }
+
+  Future<List<Ad?>> getUserPromotedAds({required String? promoterId}) async {
+    try {
+      if (promoterId == null) {
+        return [];
+      }
+      List<Ad?> promotedAds = [];
+      final adsSnaps = await _firestore
+          .collection(Paths.promotedAds)
+          .doc(promoterId)
+          .collection(Paths.ads)
+          .get();
+
+      for (var element in adsSnaps.docs) {
+        final adRef = element.data()['ad'] as DocumentReference?;
+        final adData = await adRef?.get();
+        if (adData != null) {
+          promotedAds.add(await Ad.fromDocument(adData));
+        }
+      }
+      return promotedAds;
+    } catch (error) {
+      print('Error in getting promoted ads ${error.toString()}');
+      throw const Failure(message: 'Error in getting promoted ads');
+    }
+  }
 }

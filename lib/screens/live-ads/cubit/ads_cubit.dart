@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import '/blocs/auth/auth_bloc.dart';
 import '/models/ad.dart';
 import '/models/failure.dart';
 import '/repositories/ads/ads_repository.dart';
@@ -8,8 +9,10 @@ part 'ads_state.dart';
 
 class AdsCubit extends Cubit<AdsState> {
   final AdsRepository _adRepository;
-  AdsCubit({required AdsRepository adsRepository})
+  final AuthBloc _authBloc;
+  AdsCubit({required AdsRepository adsRepository, required AuthBloc authBloc})
       : _adRepository = adsRepository,
+        _authBloc = authBloc,
         super(AdsState.initial());
 
   void fetchLiveAds() async {
@@ -17,11 +20,22 @@ class AdsCubit extends Cubit<AdsState> {
       emit(state.copyWith(status: AdsStatus.loading));
 
       final ads = await _adRepository.getLiveAds();
-
       emit(state.copyWith(
           liveAds: await Future.wait(ads), status: AdsStatus.succuss));
     } on Failure catch (failure) {
       emit(state.copyWith(status: AdsStatus.error, failure: failure));
+    }
+  }
+
+  void promoteAd({required String? adId}) async {
+    try {
+      emit(state.copyWith(status: AdsStatus.loading));
+
+      await _adRepository.promoteAd(
+          userId: _authBloc.state.promoter?.promoterId, adId: adId);
+      emit(state.copyWith(status: AdsStatus.adShared));
+    } on Failure catch (failure) {
+      emit(state.copyWith(failure: failure, status: AdsStatus.error));
     }
   }
 }

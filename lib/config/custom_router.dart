@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prmt_promoter/screens/live-ads/screens/share_ad.dart';
+import '/screens/profile/profile_screen.dart';
+import '/screens/live-ads/screens/share_ad.dart';
 import '/screens/registration/screens/registrations_screen.dart';
 import '/screens/signup/otp_screen.dart';
 import '/screens/live-ads/live_ads_screen.dart';
@@ -46,6 +47,12 @@ class CustomRouter {
       case ShareAdScreen.routeName:
         return ShareAdScreen.route(args: settings.arguments as ShareAdsArgs);
 
+      case DashBoard.routeName:
+        return DashBoard.route();
+
+      case ProfileScreen.routeName:
+        return ProfileScreen.route();
+
       // case CreateAdScreen.routeName:
       //   return CreateAdScreen.route();
 
@@ -58,9 +65,6 @@ class CustomRouter {
 
       // case PaymentSuccussfull.routeName:
       //   return PaymentSuccussfull.route();
-
-      case DashBoard.routeName:
-        return DashBoard.route();
 
       // case AdDetails.routeName:
       //   return AdDetails.route(args: settings.arguments as AdDetailsArgs);

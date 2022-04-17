@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:prmt_promoter/screens/dashboard/dashboard.dart';
+import '/screens/live-ads/cubit/ads_cubit.dart';
 import '/enums/enums.dart';
 import '/models/ad.dart';
 import '/services/share_service.dart';
@@ -12,6 +15,21 @@ class ShareIntent extends StatelessWidget {
   final Ad? ad;
 
   const ShareIntent({Key? key, required this.ad}) : super(key: key);
+
+  void share(BuildContext context) async {
+    final result = await ShareService.shareMedia(
+          storyUrl: ad?.mediaUrl,
+          text: '${ad?.title}\n${ad?.targetLink}',
+          mediaType: ad?.adType ?? MediaType.none,
+        ) ??
+        false;
+
+    print('Result of share $result');
+    if (result) {
+      context.read<AdsCubit>().promoteAd(adId: ad?.adId);
+      Navigator.of(context).pushNamed(DashBoard.routeName);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,53 +142,42 @@ class ShareIntent extends StatelessWidget {
                 icon: FontAwesomeIcons.whatsappSquare,
                 label: 'SHARE IN WHATSAPP',
                 //onTap: showShareIntent,
-                onTap: () {
-                  ShareService.shareMedia(
-                    storyUrl: ad?.mediaUrl,
-                    text: '${ad?.title}\n${ad?.targetLink}',
-                    mediaType: ad?.adType ?? MediaType.none,
-                  );
-                },
+                onTap: () async => share(context),
               ),
               SocialShareBtn(
                 bgColor: const Color(0xff2588E7),
                 icon: FontAwesomeIcons.facebookSquare,
                 label: 'SHARE IN FACEBOOK',
-                onTap: () async {
-                  ShareService.shareMedia(
-                    storyUrl: ad?.mediaUrl,
-                    text: '${ad?.title}\n${ad?.targetLink}',
-                    mediaType: ad?.adType ?? MediaType.none,
-                  );
-                  // final result = await Share.shareFilesWithResult(
-                  //   [_file!.path],
-                  //   text: 'Whats app share',
-                  //   subject: 'Share haa',
-                  //   // sharePositionOrigin:
-                  //   //     box!.localToGlobal(Offset.zero) & box.size,
-                  // );
+                onTap: () async => share(context),
+                // onTap: () async {
+                //   ShareService.shareMedia(
+                //     storyUrl: ad?.mediaUrl,
+                //     text: '${ad?.title}\n${ad?.targetLink}',
+                //     mediaType: ad?.adType ?? MediaType.none,
+                //   );
+                // final result = await Share.shareFilesWithResult(
+                //   [_file!.path],
+                //   text: 'Whats app share',
+                //   subject: 'Share haa',
+                //   // sharePositionOrigin:
+                //   //     box!.localToGlobal(Offset.zero) & box.size,
+                // );
 
-                  // print('Result -${result.status}');
-                  //Share.shareFiles([_file!.path], text: 'Great picture');
-                  // Share.share(
-                  //     'check out my website https://pub.dev/packages/social_share',
-                  //     subject: 'Look what I made!');
-                  // SocialShare.shareFacebookStory(_file!.path, '#ffffff',
-                  //     '#000000', 'https://pub.dev/packages/social_share',
-                  //     appId: '514746270182591');
-                },
+                // print('Result -${result.status}');
+                //Share.shareFiles([_file!.path], text: 'Great picture');
+                // Share.share(
+                //     'check out my website https://pub.dev/packages/social_share',
+                //     subject: 'Look what I made!');
+                // SocialShare.shareFacebookStory(_file!.path, '#ffffff',
+                //     '#000000', 'https://pub.dev/packages/social_share',
+                //     appId: '514746270182591');
+                // },
               ),
               SocialShareBtn(
                 bgColor: const Color(0xffD3698E),
                 icon: FontAwesomeIcons.instagram,
                 label: 'SHARE IN INSTAGRAM',
-                onTap: () {
-                  ShareService.shareMedia(
-                    storyUrl: ad?.mediaUrl,
-                    text: '${ad?.title}\n${ad?.targetLink}',
-                    mediaType: ad?.adType ?? MediaType.none,
-                  );
-                },
+                onTap: () async => share(context),
               )
               // GestureDetector(
               //   onTap: () {

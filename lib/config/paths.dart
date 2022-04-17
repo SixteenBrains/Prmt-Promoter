@@ -12,6 +12,8 @@ class Paths {
 
   static const payments = 'payments';
 
+  static const promotedAds = 'promotedAds';
+
   // sub collection
 
   static const draftAds = 'draftAds';

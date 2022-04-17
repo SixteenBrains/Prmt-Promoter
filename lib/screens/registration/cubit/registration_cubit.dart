@@ -146,9 +146,8 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 
   void loadCites() async {
     emit(state.copyWith(status: RegistrationStatus.loading));
-    final cities = await _profileRepository.getStateCities(state: state.state);
-    emit(state.copyWith(
-        status: RegistrationStatus.initial, stateCities: cities));
+    // final cities = await _profileRepository.getStateCities(state: state.state);
+    emit(state.copyWith(status: RegistrationStatus.initial, stateCities: []));
   }
 
   void stateChanged(String value) {
@@ -175,22 +174,22 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   void registerUser() async {
     try {
       emit(state.copyWith(status: RegistrationStatus.submitting));
-      final promoter = Promoter(
-        name: state.fName,
-        email: state.email,
-        createdAt: DateTime.now(),
-        incomeRange: state.incomeRange,
-        interest: state.interests,
-        ageRange: state.ageRange,
-        cities: state.selectedCities,
-        state: state.state,
-      );
-      await _profileRepository.registerPromoter(
-        promoter: promoter.copyWith(
-          phoneNumber: _authBloc.state.promoter?.phoneNumber,
-          promoterId: _authBloc.state.promoter?.promoterId,
-        ),
-      );
+      // final promoter = Promoter(
+      //   name: state.fName,
+      //   email: state.email,
+      //   createdAt: DateTime.now(),
+      //   incomeRange: state.incomeRange,
+      //   interest: state.interests,
+      //   ageRange: state.ageRange,
+      //   cities: state.selectedCities,
+      //   state: state.state,
+      // );
+      // await _profileRepository.registerPromoter(
+      //   promoter: promoter.copyWith(
+      //     phoneNumber: _authBloc.state.promoter?.phoneNumber,
+      //     promoterId: _authBloc.state.promoter?.promoterId,
+      //   ),
+      // );
 
       emit(state.copyWith(status: RegistrationStatus.succuss));
     } on Failure catch (error) {
