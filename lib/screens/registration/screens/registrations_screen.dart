@@ -31,85 +31,113 @@ class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //  final _authBloc = context.read<AuthBloc>().state;
+    final _regCubit = context.read<RegistrationCubit>();
 
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: BlocConsumer<RegistrationCubit, RegistrationState>(
-        listener: (context, state) {
-          if (state.status == RegistrationStatus.succuss) {
-            //Navigator.of(context).pushNamed(DashBoard.routeName);
-          }
-        },
-        builder: (context, state) {
-          if (state.status == RegistrationStatus.submitting) {
-            return const Scaffold(body: LoadingIndicator());
-          } else if (state.status == RegistrationStatus.succuss) {
-            return const ProfileCompleted();
-          }
+    return BlocConsumer<RegistrationCubit, RegistrationState>(
+      listener: (context, state) {
+        if (state.status == RegistrationStatus.succuss) {
+          //Navigator.of(context).pushNamed(DashBoard.routeName);
+        }
+      },
+      builder: (context, state) {
+        if (state.status == RegistrationStatus.submitting) {
+          return const Scaffold(body: LoadingIndicator());
+        } else if (state.status == RegistrationStatus.succuss) {
+          return const ProfileCompleted();
+        }
 
-          return GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Scaffold(
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 20.0,
-                  horizontal: 20.0,
-                ),
-                child: SafeArea(
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: GestureDetector(
-                          onTap: () {
-                            // if (state.currentPage ==
-                            //     RegistrationCurrentPage.businessName) {
-                            //   context
-                            //       .read<RegistrationCubit>()
-                            //       .changePage(RegistrationCurrentPage.email);
-                            // } else if (state.currentPage ==
-                            //     RegistrationCurrentPage.email) {
-                            //   context
-                            //       .read<RegistrationCubit>()
-                            //       .changePage(RegistrationCurrentPage.fName);
-                            // } else if (state.currentPage ==
-                            //     RegistrationCurrentPage.businessType) {
-                            //   context.read<RegistrationCubit>().changePage(
-                            //       RegistrationCurrentPage.businessName);
-                            // }
-                          },
-                          child: CircleAvatar(
-                            backgroundColor: state.currentPage ==
-                                    RegistrationCurrentPage.fName
-                                ? Colors.white
-                                : const Color(0xffF4F4F9),
-                            radius: 25.0,
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: state.currentPage ==
+        return WillPopScope(
+            onWillPop: () async {
+              bool canPop = false;
+              switch (state.currentPage) {
+                // case RegistrationCurrentPage.fName:
+                //   canPop = true;
+                //   break;
+
+                case RegistrationCurrentPage.email:
+                  _regCubit.changePage(RegistrationCurrentPage.fName);
+                  break;
+
+                case RegistrationCurrentPage.targetGroup:
+                  _regCubit.changePage(RegistrationCurrentPage.email);
+                  break;
+
+                case RegistrationCurrentPage.demographics:
+                  _regCubit.changePage(RegistrationCurrentPage.targetGroup);
+
+                  break;
+                default:
+              }
+              return canPop;
+            },
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Scaffold(
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20.0,
+                    horizontal: 20.0,
+                  ),
+                  child: SafeArea(
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: GestureDetector(
+                            onTap: () {
+                              //fName, email, targetGroup, demographics
+
+                              switch (state.currentPage) {
+                                case RegistrationCurrentPage.email:
+                                  _regCubit.changePage(
+                                      RegistrationCurrentPage.fName);
+                                  break;
+
+                                case RegistrationCurrentPage.targetGroup:
+                                  _regCubit.changePage(
+                                      RegistrationCurrentPage.email);
+                                  break;
+
+                                case RegistrationCurrentPage.demographics:
+                                  _regCubit.changePage(
+                                      RegistrationCurrentPage.targetGroup);
+
+                                  break;
+                                default:
+                              }
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: state.currentPage ==
                                       RegistrationCurrentPage.fName
                                   ? Colors.white
-                                  : const Color(0xff999999),
+                                  : const Color(0xffF4F4F9),
+                              radius: 25.0,
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: state.currentPage ==
+                                        RegistrationCurrentPage.fName
+                                    ? Colors.white
+                                    : const Color(0xff999999),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: CurrentRegScreen(state: state)
-                            // _screens(state),
-                            ),
-                      ),
-                    ],
+                        const SizedBox(height: 20.0),
+                        Expanded(
+                          child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: CurrentRegScreen(state: state)
+                              // _screens(state),
+                              ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
-      ),
+            ));
+      },
     );
   }
 }

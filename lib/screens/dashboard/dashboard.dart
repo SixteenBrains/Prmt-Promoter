@@ -233,6 +233,7 @@ class DashBoard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 10.0),
                   Expanded(
                       child: ListView.builder(
                           itemCount: state.promotedAds.length,
@@ -241,7 +242,7 @@ class DashBoard extends StatelessWidget {
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 10.0,
-                                vertical: 10.0,
+                                //vertical: 5.0,
                               ),
                               child: Card(
                                 child: Padding(

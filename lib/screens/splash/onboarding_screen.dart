@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:introduction_screen/introduction_screen.dart';
 import '/config/auth_wrapper.dart';
 import '/config/shared_prefs.dart';
@@ -66,7 +66,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
                   pages: [
                     PageViewModel(
-                      title: 'Showcase your ad in the',
+                      title: 'Tap and share ads on your',
                       bodyWidget: Column(
                         children: [
                           Row(
@@ -91,7 +91,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           ),
                           const SizedBox(height: 15.0),
                           const Text(
-                            'of the real users',
+                            'and earn money!',
                             style: TextStyle(
                               // style: GoogleFonts.openSans(
                               color: Color(0xff4A4980),
@@ -110,30 +110,64 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         imageAlignment: Alignment.center,
                         //imagePadding: const EdgeInsets.only(top: 100.0),
                       ),
-                      image: _buildImage('Group 121.png'),
+                      image: _buildImage('Group 407.png'),
                     ),
                     PageViewModel(
                       title: '',
-                      bodyWidget: Text(
-                        'Maximum reach and conversions from the minimum investment',
-                        style: GoogleFonts.openSans(
-                          color: const Color(0xff4A4980),
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
+                      bodyWidget: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/Group 177.png',
+                            width: 350,
+                            height: 260.0,
+                            fit: BoxFit.contain,
+                            alignment: Alignment.center,
+                          ),
+                          const SizedBox(height: 35.0),
+                          const Text(
+                            'Share with maximum people to earn more. Withdraw anytime!',
+                            style: TextStyle(
+                              color: Color(0xff4A4980),
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
-                      decoration: PageDecoration(
-                        titleTextStyle: GoogleFonts.openSans(
-                          color: const Color(0xff4A4980),
+                      decoration: const PageDecoration(
+                        titleTextStyle: TextStyle(
+                          color: Color(0xff4A4980),
                           fontSize: 25.0,
                           fontWeight: FontWeight.w600,
                         ),
-                        imageAlignment: Alignment.center,
+                        // imageAlignment: Alignment.center,
                         // imagePadding: const EdgeInsets.only(top: 100.0),
                       ),
-                      image: _buildImage('Group 67.png'),
+                      //image: _buildImage('Group 177.png'),
                     ),
+                    // PageViewModel(
+                    //   title: '',
+                    //   bodyWidget: const Text(
+                    //     'Share with maximum people to earn more. Withdraw anytime!',
+                    //     style: TextStyle(
+                    //       color: Color(0xff4A4980),
+                    //       fontSize: 25.0,
+                    //       fontWeight: FontWeight.w600,
+                    //     ),
+                    //     textAlign: TextAlign.center,
+                    //   ),
+                    //   decoration: const PageDecoration(
+                    //     titleTextStyle: TextStyle(
+                    //       color: Color(0xff4A4980),
+                    //       fontSize: 25.0,
+                    //       fontWeight: FontWeight.w600,
+                    //     ),
+                    //     imageAlignment: Alignment.center,
+                    //     // imagePadding: const EdgeInsets.only(top: 100.0),
+                    //   ),
+                    //   image: _buildImage('Group 177.png'),
+                    // ),
                   ],
                   onDone: () => _onIntroEnd(context),
                   //onSkip: () => _onIntroEnd(context), // You can override onSkip callback

@@ -23,6 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (user) async {
         final promoter = await _profileRepository.getPromoterProfile(
             promoterId: user?.promoterId);
+        print('Current promoter -- $promoter');
         add(
           AuthUserChanged(
             promoter: user?.copyWith(

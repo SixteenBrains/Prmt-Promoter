@@ -72,6 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
     print('Moving --- ${_timer.tick < 5}');
     final _canvas = MediaQuery.of(context).size;
+    // const text = 'PR      M      T     ';
     const text = 'PR      M      T     ';
     return WillPopScope(
       onWillPop: () async => false,
@@ -103,13 +104,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 60.0,
+                        // fontSize: 60.0,
+                        fontSize: 65.0,
                         fontWeight: FontWeight.w600,
                         letterSpacing: -7.0,
                       ),
                     ),
                     Text(
-                      'YOUR BUSSINESS',
+                      'SHARE & EARN ',
+                      // 'YOUR BUSSINESS',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 28.0,
@@ -121,12 +124,12 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               if (!animated)
                 AnimatedPositioned(
-                  top: selected ? -50 : _canvas.height * 0.432,
+                  top: selected ? -50 : _canvas.height * 0.428,
                   // bottom: selected ? -70 : _canvas.height * 0.475,
                   //  top: selected ? -50 : _canvas.height * 0.432,
                   // top: _canvas.height * 0.432,
                   //  right: 130.0,
-                  right: _canvas.width * 0.33,
+                  right: _canvas.width * 0.315,
                   // top: selected ? -50 : 350.0,
                   // right: 130.0,
                   duration: const Duration(milliseconds: 1000),
@@ -135,7 +138,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     'O',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 60.0,
+                      fontSize: 65.0,
                       fontWeight: FontWeight.w600,
                       letterSpacing: -7.0,
                     ),
@@ -143,11 +146,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               if (!animated)
                 AnimatedPositioned(
-                  bottom: selected ? -70 : _canvas.height * 0.475,
+                  bottom: selected ? -70 : _canvas.height * 0.471,
 
                   //top: _canvas.height * 0.432,
                   //  right: 130.0,
-                  right: _canvas.width * 0.56,
+                  right: _canvas.width * 0.575,
                   // top: selected ? -50 : 350.0,
                   // right: 130.0,
                   duration: const Duration(milliseconds: 1000),
@@ -156,7 +159,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     'O',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 60.0,
+                      fontSize: 65.0,
                       fontWeight: FontWeight.w600,
                       letterSpacing: -7.0,
                     ),
@@ -164,12 +167,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               if (!animated)
                 AnimatedPositioned(
-                  bottom: selected ? -70 : _canvas.height * 0.475,
+                  bottom: selected ? -70 : _canvas.height * 0.472,
                   //   bottom: selected ? 150 : _canvas.height * 0.9,
                   //  top: selected ? 150 : _canvas.height * 0.432,
                   // top: _canvas.height * 0.432,
                   //  right: 130.0,
-                  right: _canvas.width * 0.19,
+                  right: _canvas.width * 0.1565,
                   // top: selected ? -50 : 350.0,
                   // right: 130.0,
                   duration: const Duration(milliseconds: 1000),
@@ -178,7 +181,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     'E',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 60.0,
+                      fontSize: 65.0,
                       fontWeight: FontWeight.w600,
                       letterSpacing: -7.0,
                     ),

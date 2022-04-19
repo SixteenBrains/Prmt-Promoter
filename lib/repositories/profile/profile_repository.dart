@@ -14,7 +14,6 @@ class ProfileRepository extends BaseProfileRepository {
   ProfileRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  @override
   Future<void> registerPromoter({required Promoter promoter}) async {
     try {
       await _firestore
@@ -27,7 +26,6 @@ class ProfileRepository extends BaseProfileRepository {
     }
   }
 
-  @override
   Future<Promoter?> getPromoterProfile({
     required String? promoterId,
   }) async {

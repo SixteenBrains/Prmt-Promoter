@@ -22,24 +22,24 @@ class ProfileCompleted extends StatelessWidget {
             children: [
               SizedBox(height: _canvas.height * 0.15),
               Image.asset(
-                'assets/images/Group 101.png',
+                'assets/images/Group 407.png',
                 height: _canvas.height * 0.35,
                 width: _canvas.height * 0.35,
                 fit: BoxFit.contain,
               ),
               SizedBox(height: _canvas.height * 0.06),
+              // Text(
+              //   'Congrats!\nNow You are a Promoter',
+              //   style: TextStyle(
+              //     color: Colors.grey.shade800,
+              //     fontSize: 24.0,
+              //     fontWeight: FontWeight.w600,
+              //   ),
+              //   textAlign: TextAlign.center,
+              // ),
+              // const SizedBox(height: 20.0),
               Text(
-                'Your profile is completed.',
-                style: TextStyle(
-                  color: Colors.grey.shade800,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.w600,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20.0),
-              Text(
-                'Now let\'s create your first ad ',
+                'Congrats!\nNow You are a Promoter\n\nBrowse available ads, Share them in your social\nmedia in one tap and\nStart Earning!!!',
                 style: TextStyle(
                   color: Colors.grey.shade800,
                   fontSize: 24.0,

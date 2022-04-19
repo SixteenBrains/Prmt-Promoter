@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:prmt_promoter/blocs/auth/auth_bloc.dart';
-
+import '/blocs/auth/auth_bloc.dart';
+import '/screens/dashboard/dashboard.dart';
 import '/widgets/loading_indicator.dart';
 import '/repositories/ads/ads_repository.dart';
 import '/screens/live-ads/cubit/ads_cubit.dart';
@@ -10,6 +10,7 @@ import 'widgets/label_icon.dart';
 import 'widgets/share_intent.dart';
 import 'widgets/show_ad_media.dart';
 
+// TODO: Work on live ads screen
 class LiveAdsScreen extends StatelessWidget {
   static const String routeName = '/liveAds';
   const LiveAdsScreen({Key? key}) : super(key: key);
@@ -138,6 +139,11 @@ class LiveAdsScreen extends StatelessWidget {
                     },
                   ),
                 ),
+                TextButton(
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(DashBoard.routeName),
+                  child: const Text('Skip Now'),
+                )
               ],
             ),
           );
