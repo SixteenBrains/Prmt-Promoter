@@ -40,6 +40,7 @@ class DashBoard extends StatelessWidget {
             if (state.status == DashBoardStatus.loading) {
               return const LoadingIndicator();
             }
+            print('Promoted ads -- ${state.promotedAds}');
             return SafeArea(
               child: Column(
                 children: [

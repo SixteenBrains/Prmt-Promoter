@@ -31,26 +31,9 @@ class AdsCubit extends Cubit<AdsState> {
     }
   }
 
-  void promoteAd({
-    required Ad? ad,
-    required String? authorId,
-  }) async {
+  void promoteAd({required Ad? ad, required PromotedAd? promotedAd}) async {
     try {
       emit(state.copyWith(status: AdsStatus.loading));
-
-      final query = jsonEncode(
-          {'promoterId': authorId, 'adId': ad?.adId, 'adUrl': ad?.targetLink});
-
-      final promotedAd = PromotedAd(
-        ad: ad,
-        // add url = function url ? params{promoterId, adId, adUrl}
-
-        affiliateUrl:
-            'https://us-central1-prmt-business.cloudfunctions.net/promote?$query',
-        clickCount: 0,
-        conversion: 0,
-        authorId: authorId,
-      );
 
       await _adRepository.promoteAd(
         promotedAd: promotedAd,
