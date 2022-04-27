@@ -1,0 +1,10 @@
+1. Calcualte number of click of link 
+2. Calcualte number of conversion of link ( target link of the ad )
+
+
+Idea - 1
+
+WIll generate firebase dynamic link for every target link of the ad,
+then whenever user clicks on that link, our app will open with 
+webview of the product and then we will increase the target link count
+and when user navigate to orignal site or buy the product will increase the conversions 

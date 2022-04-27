@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:prmt_promoter/screens/live-ads/live_ads_screen.dart';
 import '/screens/profile/profile_screen.dart';
 import '/screens/live-ads/widgets/label_icon.dart';
 import '/screens/live-ads/widgets/show_ad_media.dart';
@@ -156,7 +157,8 @@ class DashBoard extends StatelessWidget {
                                             BorderRadius.circular(20.0),
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.of(context)
+                                        .pushNamed(LiveAdsScreen.routeName),
                                     child: const Text(
                                       'Withdraw Money',
                                       style: TextStyle(
@@ -238,7 +240,7 @@ class DashBoard extends StatelessWidget {
                       child: ListView.builder(
                           itemCount: state.promotedAds.length,
                           itemBuilder: (context, index) {
-                            final ad = state.promotedAds[index];
+                            final promotedAd = state.promotedAds[index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 10.0,
@@ -252,14 +254,14 @@ class DashBoard extends StatelessWidget {
                                     leading: ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: ShowAdMedia(
-                                        mediaType: ad?.adType,
-                                        mediaUrl: ad?.mediaUrl,
+                                        mediaType: promotedAd?.ad?.adType,
+                                        mediaUrl: promotedAd?.ad?.mediaUrl,
                                         height: 50.0,
                                         width: 50.0,
                                       ),
                                     ),
                                     title: Text(
-                                      ad?.title ?? 'N/A',
+                                      promotedAd?.ad?.title ?? 'N/A',
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                     ),

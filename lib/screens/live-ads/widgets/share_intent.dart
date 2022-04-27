@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:prmt_promoter/blocs/auth/auth_bloc.dart';
 import 'package:prmt_promoter/screens/dashboard/dashboard.dart';
 import '/screens/live-ads/cubit/ads_cubit.dart';
 import '/enums/enums.dart';
@@ -26,7 +27,12 @@ class ShareIntent extends StatelessWidget {
 
     print('Result of share $result');
     if (result) {
-      context.read<AdsCubit>().promoteAd(adId: ad?.adId);
+      final authorId = context.read<AuthBloc>().state.promoter?.promoterId;
+      if (authorId != null && ad != null) {
+        context.read<AdsCubit>().promoteAd(ad: ad, authorId: authorId);
+      }
+
+      // context.read<AdsCubit>().promoteAd(adId: ad?.adId);
       Navigator.of(context).pushNamed(DashBoard.routeName);
     }
   }

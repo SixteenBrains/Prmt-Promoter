@@ -3,7 +3,7 @@ part of 'dashboard_bloc.dart';
 enum DashBoardStatus { initial, loading, succuss, error }
 
 class DashboardState extends Equatable {
-  final List<Ad?> promotedAds;
+  final List<PromotedAd?> promotedAds;
   final Failure failure;
   final DashBoardStatus status;
 
@@ -24,7 +24,7 @@ class DashboardState extends Equatable {
       'DashboardState(promotedAds: $promotedAds, failure: $failure, status: $status)';
 
   DashboardState copyWith({
-    List<Ad?>? promotedAds,
+    List<PromotedAd?>? promotedAds,
     Failure? failure,
     DashBoardStatus? status,
   }) {

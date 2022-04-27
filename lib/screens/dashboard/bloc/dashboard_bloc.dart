@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:prmt_promoter/models/promoted_ad.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/models/ad.dart';
 import '/models/failure.dart';
@@ -25,7 +26,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         final ads = await _adsRepository.getUserPromotedAds(
             promoterId: _authBloc.state.promoter?.promoterId);
 
-        emit(state.copyWith(status: DashBoardStatus.succuss, promotedAds: ads));
+        emit(state.copyWith(
+            status: DashBoardStatus.succuss,
+            promotedAds: await Future.wait(ads)));
       } on Failure catch (failure) {
         emit(state.copyWith(status: DashBoardStatus.error, failure: failure));
       }

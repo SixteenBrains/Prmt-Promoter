@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:prmt_promoter/models/promoted_ad.dart';
+import 'package:prmt_promoter/models/promoter.dart';
 import '/config/paths.dart';
 import '/models/ad.dart';
 import '/models/failure.dart';
@@ -25,16 +27,19 @@ class AdsRepository extends BaseAdRepostory {
     }
   }
 
-  Future<void> promoteAd(
-      {required String? userId, required String? adId}) async {
+  Future<void> promoteAd({
+    // required String? userId,
+    // required String? adId,
+    required PromotedAd? promotedAd,
+  }) async {
     try {
-      if (userId != null && adId != null) {
+      if (promotedAd != null) {
         _firestore
             .collection(Paths.promotedAds)
-            .doc(userId)
+            .doc(promotedAd.authorId)
             .collection(Paths.ads)
-            .doc(adId)
-            .set({'ad': _firestore.collection(Paths.ads).doc(adId)});
+            .doc(promotedAd.ad?.adId)
+            .set(promotedAd.toMap());
       }
     } catch (error) {
       print('Error in promoting ad ${error.toString()}');
@@ -42,26 +47,33 @@ class AdsRepository extends BaseAdRepostory {
     }
   }
 
-  Future<List<Ad?>> getUserPromotedAds({required String? promoterId}) async {
+  Future<List<Future<PromotedAd?>>> getUserPromotedAds(
+      {required String? promoterId}) async {
     try {
       if (promoterId == null) {
         return [];
       }
-      List<Ad?> promotedAds = [];
+      // List<Ad?> promotedAds = [];
       final adsSnaps = await _firestore
           .collection(Paths.promotedAds)
           .doc(promoterId)
           .collection(Paths.ads)
           .get();
 
-      for (var element in adsSnaps.docs) {
-        final adRef = element.data()['ad'] as DocumentReference?;
-        final adData = await adRef?.get();
-        if (adData != null) {
-          promotedAds.add(await Ad.fromDocument(adData));
-        }
-      }
-      return promotedAds;
+      // return adsSnaps.docs.map((doc) => null).toList();
+
+      return adsSnaps.docs
+          .map((doc) async => PromotedAd.fromDocument(doc))
+          .toList();
+
+      // for (var element in adsSnaps.docs) {
+      //   final adRef = element.data()['ad'] as DocumentReference?;
+      //   final adData = await adRef?.get();
+      //   if (adData != null) {
+      //     promotedAds.add(await Ad.fromDocument(adData));
+      //   }
+      // }
+      // return promotedAds;
     } catch (error) {
       print('Error in getting promoted ads ${error.toString()}');
       throw const Failure(message: 'Error in getting promoted ads');
