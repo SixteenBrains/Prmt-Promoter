@@ -82,6 +82,7 @@ class BussinessUser extends Equatable {
       businessType: map['businessType'],
       state: map['state'],
       city: map['city'],
+      businessName: map['businessName'],
     );
   }
 
@@ -109,6 +110,7 @@ class BussinessUser extends Equatable {
       city: data?['city'],
       state: data?['state'],
       phoneNumber: data?['phoneNumber'],
+      businessName: data?['businessName'],
     );
   }
 
@@ -119,7 +121,7 @@ class BussinessUser extends Equatable {
 
   @override
   String toString() {
-    return 'AppUser(email: $email, name: $name, uid: $uid, createdAt: $createdAt, businessType: $businessType, city: $city, state: $state,  profileImg: $profileImg, phoneNumber: $phoneNumber)';
+    return 'AppUser(email: $email, name: $name, uid: $uid, createdAt: $createdAt, businessType: $businessType, city: $city, state: $state,  profileImg: $profileImg, phoneNumber: $phoneNumber, businessName: $businessName)';
   }
 
   @override

@@ -31,6 +31,7 @@ class EditProfile extends StatelessWidget {
   void _submit(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       context.read<ProfileCubit>().editProfile();
+      FocusScope.of(context).unfocus();
       Navigator.of(context).pop();
     }
   }

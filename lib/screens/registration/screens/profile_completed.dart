@@ -54,7 +54,8 @@ class ProfileCompleted extends StatelessWidget {
                   // _regisCubit.setFirstAdCreated();
                   // print(
                   //     'First ad  ${_regisCubit.state.currentUser?.firstAdCreated}');
-                  Navigator.of(context).pushNamed(LiveAdsScreen.routeName);
+                  Navigator.of(context).pushNamed(LiveAdsScreen.routeName,
+                      arguments: LiveAdsScreenArgs(showSkip: true));
                 },
                 label: 'START PROMOTING',
                 isEnabled: true,

@@ -46,7 +46,8 @@ class _ShowAdMediaState extends State<ShowAdMedia> {
             128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
         quality: 25,
       );
-      print('Thumbnail  ------ $uint8list');
+
+      /// print('Thumbnail  ------ $uint8list');
       setState(() {
         _videoThumbnail = uint8list;
         // _loading = false;

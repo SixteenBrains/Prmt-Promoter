@@ -17,28 +17,31 @@ exports.promote = functions.https
 .onRequest(async (req, res) => {
     // this funtion url - https://us-central1-<project-id>.cloudfunctions.net/date
     //https://us-central1-viewyourstories-4bf4d.cloudfunctions.net/date
+
+
      const dataQuery = req.query;
-     const querydata = dataQuery.data;
 
-     const data =  JSON.parse(querydata);
+     const adUrl = dataQuery.adUrl;
+
+     const adId = dataQuery.adId;
+
+     const promoterId = dataQuery.promoterId;
+
+    //  const querydata = dataQuery.data;
+
+    //  const data =  JSON.parse(querydata);
 
 
-     const adUrl = data.adUrl;
-     const adId = data.adId;
-     const promoterId = data.promoterId;
+    //  const adUrl = data.adUrl;
+    //  const adId = data.adId;
+    //  const promoterId = data.promoterId;
 
     //  const adDoc = await admin.firestore().collection('promotedAds').doc(promoterId).collection('ads').doc(adId).get();
     const adDoc =  admin.firestore().collection('promotedAds').doc(promoterId).collection('ads').doc(adId);
 
-    //  admin.FieldValue.increment
-     //await adDoc.update({'clickCount': 1})
-
-  ///  const reqData = adDoc.data();
-
     await adDoc.update({'clickCount': admin.firestore.FieldValue.increment(1)}) 
 
-    
-
+    res.redirect(adUrl);
 
 
      
@@ -63,7 +66,7 @@ exports.promote = functions.https
     //res.send(data + queryData + body);
     // res.redirect(adUrl);
     //res.send(adUrl);
-    res.redirect(adUrl);
+
     });
 
 

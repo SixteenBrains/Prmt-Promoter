@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prmt_promoter/screens/profile/edit_profile.dart';
+import '/screens/my-earning/my_earnings.dart';
+import '/screens/notifications/notifications_screen.dart';
+import '/screens/profile/edit_profile.dart';
 import '/screens/profile/profile_screen.dart';
 import '/screens/live-ads/screens/share_ad.dart';
 import '/screens/registration/screens/registrations_screen.dart';
@@ -34,7 +36,8 @@ class CustomRouter {
         return SignUpScreen.route();
 
       case LiveAdsScreen.routeName:
-        return LiveAdsScreen.route();
+        return LiveAdsScreen.route(
+            args: settings.arguments as LiveAdsScreenArgs);
 
       // // case ProfileCompleted.routeName:
       // //   return ProfileCompleted.route();
@@ -57,34 +60,11 @@ class CustomRouter {
       case EditProfile.routeName:
         return EditProfile.route();
 
-      // case CreateAdScreen.routeName:
-      //   return CreateAdScreen.route();
+      case NotificationsScreen.routeName:
+        return NotificationsScreen.route();
 
-      // case PreviewAdScreen.routeName:
-      //   return PreviewAdScreen.route(args: settings.arguments as PreviewAdArgs);
-
-      // case PaymentScreen.routeName:
-      //   return PaymentScreen.route(
-      //       args: settings.arguments as PaymentScreenArgs);
-
-      // case PaymentSuccussfull.routeName:
-      //   return PaymentSuccussfull.route();
-
-      // case AdDetails.routeName:
-      //   return AdDetails.route(args: settings.arguments as AdDetailsArgs);
-
-      // case ProfileScreen.routeName:
-      //   return ProfileScreen.route();
-
-      // case EditProfile.routeName:
-      //   return EditProfile.route();
-
-      // case CardPayment.routeName:
-      //   return CardPayment.route(args: settings.arguments as CardPaymentArgs);
-
-      // case RazorpayPayment.routeName:
-      //   return RazorpayPayment.route(
-      //       args: settings.arguments as RazorpayPaymentArgs);
+      case MyEarnings.routeName:
+        return MyEarnings.route();
 
       default:
         return _errorRoute();

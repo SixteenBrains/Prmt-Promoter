@@ -50,5 +50,5 @@ class ProfileState extends Equatable {
 
   @override
   String toString() =>
-      'ProfileState(promoter: $promoter, status: $status, failure: $failure, imageFile: $imageFile)';
+      'ProfileState(promoter: $promoter, status: $status, failure: $failure, imageFile: $imageFile, city: $cityName)';
 }

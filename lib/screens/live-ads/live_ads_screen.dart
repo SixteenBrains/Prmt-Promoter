@@ -10,11 +10,18 @@ import 'widgets/label_icon.dart';
 import 'widgets/share_intent.dart';
 import 'widgets/show_ad_media.dart';
 
-class LiveAdsScreen extends StatelessWidget {
-  static const String routeName = '/liveAds';
-  const LiveAdsScreen({Key? key}) : super(key: key);
+class LiveAdsScreenArgs {
+  final bool showSkip;
 
-  static Route route() {
+  LiveAdsScreenArgs({required this.showSkip});
+}
+
+class LiveAdsScreen extends StatelessWidget {
+  final bool showSkip;
+  static const String routeName = '/liveAds';
+  const LiveAdsScreen({Key? key, this.showSkip = false}) : super(key: key);
+
+  static Route route({required LiveAdsScreenArgs args}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (_) => BlocProvider(
@@ -22,7 +29,9 @@ class LiveAdsScreen extends StatelessWidget {
           adsRepository: context.read<AdsRepository>(),
           authBloc: context.read<AuthBloc>(),
         )..fetchLiveAds(),
-        child: const LiveAdsScreen(),
+        child: LiveAdsScreen(
+          showSkip: args.showSkip,
+        ),
       ),
     );
   }
@@ -31,6 +40,13 @@ class LiveAdsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     //final _canvas = MediaQuery.of(context).size;
     return Scaffold(
+      bottomNavigationBar: showSkip
+          ? TextButton(
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(DashBoard.routeName),
+              child: const Text('Skip Now'),
+            )
+          : null,
       backgroundColor: const Color(0xffF5F5F5),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
@@ -138,11 +154,6 @@ class LiveAdsScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                TextButton(
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed(DashBoard.routeName),
-                  child: const Text('Skip Now'),
-                )
               ],
             ),
           );

@@ -11,6 +11,10 @@ class ShowSnackBar {
       SnackBar(
         backgroundColor: backgroundColor,
         content: Text('$title'),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
         action: SnackBarAction(
           label: 'OK',
           textColor: Colors.white,

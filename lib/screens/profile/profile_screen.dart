@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:prmt_promoter/screens/my-earning/my_earnings.dart';
+import 'package:prmt_promoter/screens/notifications/notifications_screen.dart';
 import '/repositories/profile/profile_repository.dart';
 import '/utils/media_util.dart';
 import '/widgets/display_image.dart';
@@ -48,7 +50,11 @@ class ProfileScreen extends StatelessWidget {
       body: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
           if (state.status == ProfileStatus.imgUploaded) {
-            ShowSnackBar.showSnackBar(context, title: 'Pofile image updated');
+            ShowSnackBar.showSnackBar(
+              context,
+              title: 'Pofile image updated',
+              backgroundColor: Colors.green,
+            );
           }
         },
         builder: (context, state) {
@@ -151,7 +157,8 @@ class ProfileScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ProfileTile(
-                          onTap: () {},
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(MyEarnings.routeName),
                           width: _canvas.width * 0.43,
                           label: 'My\nEarnings',
                           icon: Icons.currency_rupee,
@@ -215,7 +222,8 @@ class ProfileScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ProfileTile(
-                          onTap: () {},
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(NotificationsScreen.routeName),
                           width: _canvas.width * 0.43,
                           label: 'My\nNotifications',
                           icon: Icons.notifications,
@@ -235,7 +243,7 @@ class ProfileScreen extends StatelessWidget {
                           onTap: () {},
                           width: _canvas.width * 0.43,
                           label: 'Withdrawal\nHistory',
-                          icon: FontAwesomeIcons.timeline,
+                          icon: Icons.schedule,
                         )
                       ],
                     )

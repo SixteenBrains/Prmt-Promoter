@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:prmt_promoter/blocs/auth/auth_bloc.dart';
-import 'package:prmt_promoter/models/promoted_ad.dart';
-import 'package:prmt_promoter/screens/dashboard/dashboard.dart';
+import '/blocs/auth/auth_bloc.dart';
+import '/models/promoted_ad.dart';
+import '/screens/dashboard/dashboard.dart';
 import '/screens/live-ads/cubit/ads_cubit.dart';
 import '/enums/enums.dart';
 import '/models/ad.dart';
@@ -23,24 +21,30 @@ class ShareIntent extends StatelessWidget {
   void share(BuildContext context) async {
     final authorId = context.read<AuthBloc>().state.promoter?.promoterId;
 
-    final query = jsonEncode({
-      // ignore: prefer_single_quotes
-      'promoterId': authorId,
-      'adId': '${ad?.adId}',
-      'adUrl': '${ad?.targetLink}'
-    });
+    // final query = jsonEncode({
+    //   // ignore: prefer_single_quotes
+    //   'promoterId': authorId,
+    //   'adId': '${ad?.adId}',
+    //   'adUrl': '${ad?.targetLink}'
+    //   // we also add the platform where the ad got shared
+    // });
 
+    // final query = {
+    //   // ignore: prefer_single_quotes
+    //   'promoterId': authorId,
+    //   'adId': '${ad?.adId}',
+    //   'adUrl': '${ad?.targetLink}'
+    //   // we also add the platform where the ad got shared
+    // };
     final affliateUrl =
-        'https://us-central1-prmt-business.cloudfunctions.net/promote?data=$query';
+        'https://us-central1-prmt-business.cloudfunctions.net/promote?adId=${ad?.adId}&promoterId=$authorId&adUrl=${ad?.targetLink}';
+    // 'https://us-central1-prmt-business.cloudfunctions.net/promote?data=$query';
 
     // print('Query ${query.toString()}');
 
     final promotedAd = PromotedAd(
       ad: ad,
-      // add url = function url ? params{promoterId, adId, adUrl}
-
       affiliateUrl: affliateUrl,
-
       clickCount: 0,
       conversion: 0,
       authorId: authorId,
@@ -48,7 +52,7 @@ class ShareIntent extends StatelessWidget {
 
     final result = await ShareService.shareMedia(
           storyUrl: ad?.mediaUrl,
-          text: '${ad?.title}\n${ad?.targetLink}',
+          text: affliateUrl,
           mediaType: ad?.adType ?? MediaType.none,
         ) ??
         false;
@@ -87,9 +91,10 @@ class ShareIntent extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                'This is a promotion by Bharat Traders Pvt. Ltd. of Mumbai, MH. You can earn the following:',
-                style: TextStyle(
+              Text(
+                'This is a promotion by ${ad?.author?.businessName} of ${ad?.author?.city}, ${ad?.author?.state}. You can earn the following:',
+                //'This is a promotion by Bharat Traders Pvt. Ltd. of Mumbai, MH. You can earn the following:',
+                style: const TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w600,
                 ),

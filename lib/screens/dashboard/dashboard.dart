@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '/screens/notifications/notifications_screen.dart';
 import '/screens/live-ads/live_ads_screen.dart';
 import '/screens/profile/profile_screen.dart';
 import '/screens/live-ads/widgets/label_icon.dart';
@@ -33,6 +34,16 @@ class DashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     //   final _canvas = MediaQuery.of(context).size;
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.of(context).pushNamed(
+              LiveAdsScreen.routeName,
+              arguments: LiveAdsScreenArgs(showSkip: false)),
+          child: const Icon(
+            FontAwesomeIcons.bullhorn,
+            color: Colors.white,
+            size: 20.0,
+          ),
+        ),
         backgroundColor: const Color(0xffF5F5F5),
         body: BlocConsumer<DashboardBloc, DashboardState>(
           listener: (context, state) {},
@@ -72,11 +83,15 @@ class DashBoard extends StatelessWidget {
                                       GestureDetector(
                                         onTap: () => Navigator.of(context)
                                             .pushNamed(ProfileScreen.routeName),
-                                        child: const CircleAvatar(
+                                        child: CircleAvatar(
                                           radius: 22.0,
                                           child: ClipOval(
                                             child: DisplayImage(
-                                              imageUrl: null,
+                                              imageUrl: context
+                                                  .read<AuthBloc>()
+                                                  .state
+                                                  .promoter
+                                                  ?.profileImg,
                                               height: double.infinity,
                                               width: double.infinity,
                                             ),
@@ -103,25 +118,30 @@ class DashBoard extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    child: Stack(
-                                      children: const [
-                                        Center(
-                                          child: Icon(
-                                            Icons.notifications_outlined,
-                                            size: 25.0,
+                                  GestureDetector(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed(
+                                            NotificationsScreen.routeName),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      child: Stack(
+                                        children: const [
+                                          Center(
+                                            child: Icon(
+                                              Icons.notifications_outlined,
+                                              size: 25.0,
+                                            ),
                                           ),
-                                        ),
-                                        Positioned(
-                                          top: 8.0,
-                                          right: 10.0,
-                                          child: CircleAvatar(
-                                            radius: 4.0,
-                                            backgroundColor: Colors.red,
-                                          ),
-                                        )
-                                      ],
+                                          Positioned(
+                                            top: 8.0,
+                                            right: 10.0,
+                                            child: CircleAvatar(
+                                              radius: 4.0,
+                                              backgroundColor: Colors.red,
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   )
                                 ],
@@ -132,9 +152,11 @@ class DashBoard extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: const [
                                       Text(
-                                        '₹ 2000',
+                                        '₹ 0',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 40.0,
@@ -158,8 +180,7 @@ class DashBoard extends StatelessWidget {
                                             BorderRadius.circular(20.0),
                                       ),
                                     ),
-                                    onPressed: () => Navigator.of(context)
-                                        .pushNamed(LiveAdsScreen.routeName),
+                                    onPressed: () {},
                                     child: const Text(
                                       'Withdraw Money',
                                       style: TextStyle(
@@ -290,36 +311,36 @@ class DashBoard extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  trailing: GestureDetector(
-                                    onTap: () {
-                                      // showModalBottomSheet<void>(
-                                      //   context: context,
-                                      //   builder: (context) {
-                                      //     return BlocProvider(
-                                      //       create: (context) => AdsCubit(
-                                      //         adsRepository:
-                                      //             context.read<AdsRepository>(),
-                                      //         authBloc: context.read<AuthBloc>(),
-                                      //       ),
-                                      //       child: ShareIntent(ad: ad),
-                                      //     );
-                                      //   },
-                                      // );
-                                    },
+                                  // trailing: GestureDetector(
+                                  //   onTap: () {
+                                  //     // showModalBottomSheet<void>(
+                                  //     //   context: context,
+                                  //     //   builder: (context) {
+                                  //     //     return BlocProvider(
+                                  //     //       create: (context) => AdsCubit(
+                                  //     //         adsRepository:
+                                  //     //             context.read<AdsRepository>(),
+                                  //     //         authBloc: context.read<AuthBloc>(),
+                                  //     //       ),
+                                  //     //       child: ShareIntent(ad: ad),
+                                  //     //     );
+                                  //     //   },
+                                  //     // );
+                                  //   },
 
-                                    //  => Navigator.of(context).pushNamed(
-                                    //     ShareAdScreen.routeName,
-                                    //     arguments: ShareAdsArgs(ad: ad)),
-                                    child: const CircleAvatar(
-                                      radius: 22.0,
-                                      backgroundColor: Colors.blue,
-                                      child: Icon(
-                                        FontAwesomeIcons.bullhorn,
-                                        color: Colors.white,
-                                        size: 20.0,
-                                      ),
-                                    ),
-                                  ),
+                                  //   //  => Navigator.of(context).pushNamed(
+                                  //   //     ShareAdScreen.routeName,
+                                  //   //     arguments: ShareAdsArgs(ad: ad)),
+                                  //   child: const CircleAvatar(
+                                  //     radius: 22.0,
+                                  //     backgroundColor: Colors.blue,
+                                  //     child: Icon(
+                                  //       FontAwesomeIcons.bullhorn,
+                                  //       color: Colors.white,
+                                  //       size: 20.0,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ),
                               ),
                             ),

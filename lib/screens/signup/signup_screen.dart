@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prmt_promoter/repositories/profile/profile_repository.dart';
+import '/repositories/profile/profile_repository.dart';
 import '/screens/signup/otp_screen.dart';
 import '/widgets/error_dialog.dart';
 import '/widgets/loading_indicator.dart';
