@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:prmt_promoter/repositories/profile/profile_repository.dart';
+import '/repositories/profile/profile_repository.dart';
 import '/models/failure.dart';
 part 'signup_state.dart';
 
@@ -39,7 +39,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   //   );
   // }
 
-  void checkAlreadyRegistered() async {
+  Future<bool> checkAlreadyRegistered() async {
     emit(state.copyWith(status: SignUpStatus.submitting));
     final result =
         await _profileRepository.checkNumberUsed(phNo: '+91${state.phNo}');
@@ -53,8 +53,16 @@ class SignUpCubit extends Cubit<SignUpState> {
         ),
       );
     } else {
-      emit(state.copyWith(noAlreadyUsed: result, status: SignUpStatus.initial));
+      print('this runs');
+      emit(
+        state.copyWith(
+          noAlreadyUsed: false,
+          status: SignUpStatus.initial,
+          phNo: null,
+        ),
+      );
     }
+    return result;
   }
 
   void initTimer() async {

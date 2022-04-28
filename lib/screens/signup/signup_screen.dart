@@ -24,16 +24,23 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  void _submitForm(BuildContext context, bool isSubmitting) {
+  void _submitForm(BuildContext context, bool isSubmitting) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState!.validate() && !isSubmitting) {
+      print('this runs 1');
       final _signupCubit = context.read<SignUpCubit>();
       if (_signupCubit.state.phNoIsEmpty) {
-        _signupCubit.checkAlreadyRegistered();
-
-        if (_signupCubit.state.noAlreadyUsed) {
+        print('this runs 2');
+        final result = await _signupCubit.checkAlreadyRegistered();
+        if (result == false) {
+          print('this runs 3');
           _signupCubit.verifyPhoneNumber();
         }
+
+        // if (_signupCubit.state.noAlreadyUsed) {
+        //   print('this runs 3');
+        //   _signupCubit.verifyPhoneNumber();
+        // }
       }
     }
   }

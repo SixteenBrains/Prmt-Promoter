@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/screens/dashboard/dashboard.dart';
@@ -76,82 +77,96 @@ class LiveAdsScreen extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: state.liveAds.length,
-                    itemBuilder: (context, index) {
-                      final ad = state.liveAds[index];
-                      print('Ad media -- ${ad?.mediaUrl}');
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: ShowAdMedia(
-                                mediaType: ad?.adType,
-                                mediaUrl: ad?.mediaUrl,
-                                height: 50.0,
-                                width: 50.0,
-                              ),
-                            ),
-                            title: Text(
-                              ad?.title ?? 'N/A',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.only(top: 3.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  LabelIcon(
-                                    label: '172',
-                                    icon: Icons.done,
-                                  ),
-                                  LabelIcon(
-                                      label: '33', icon: Icons.shopping_cart),
-                                  LabelIcon(
-                                    label: '12:45 hrs',
-                                    icon: Icons.lock_clock_outlined,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            trailing: GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet<void>(
-                                  context: context,
-                                  builder: (context) {
-                                    return BlocProvider(
-                                      create: (context) => AdsCubit(
-                                        adsRepository:
-                                            context.read<AdsRepository>(),
-                                        authBloc: context.read<AuthBloc>(),
+                  child: AnimationLimiter(
+                    child: ListView.builder(
+                      itemCount: state.liveAds.length,
+                      itemBuilder: (context, index) {
+                        final ad = state.liveAds[index];
+                        print('Ad media -- ${ad?.mediaUrl}');
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: const Duration(milliseconds: 375),
+                          child: SlideAnimation(
+                            verticalOffset: 50.0,
+                            child: FadeInAnimation(
+                              child: Card(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5.0),
+                                  child: ListTile(
+                                    leading: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: ShowAdMedia(
+                                        mediaType: ad?.adType,
+                                        mediaUrl: ad?.mediaUrl,
+                                        height: 50.0,
+                                        width: 50.0,
                                       ),
-                                      child: ShareIntent(ad: ad),
-                                    );
-                                  },
-                                );
-                              },
+                                    ),
+                                    title: Text(
+                                      ad?.title ?? 'N/A',
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.only(top: 3.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: const [
+                                          LabelIcon(
+                                            label: '172',
+                                            icon: Icons.done,
+                                          ),
+                                          LabelIcon(
+                                              label: '33',
+                                              icon: Icons.shopping_cart),
+                                          LabelIcon(
+                                            label: '12:45 hrs',
+                                            icon: Icons.lock_clock_outlined,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    trailing: GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet<void>(
+                                          context: context,
+                                          builder: (context) {
+                                            return BlocProvider(
+                                              create: (context) => AdsCubit(
+                                                adsRepository: context
+                                                    .read<AdsRepository>(),
+                                                authBloc:
+                                                    context.read<AuthBloc>(),
+                                              ),
+                                              child: ShareIntent(ad: ad),
+                                            );
+                                          },
+                                        );
+                                      },
 
-                              //  => Navigator.of(context).pushNamed(
-                              //     ShareAdScreen.routeName,
-                              //     arguments: ShareAdsArgs(ad: ad)),
-                              child: const CircleAvatar(
-                                radius: 22.0,
-                                backgroundColor: Colors.blue,
-                                child: Icon(
-                                  FontAwesomeIcons.bullhorn,
-                                  color: Colors.white,
-                                  size: 20.0,
+                                      //  => Navigator.of(context).pushNamed(
+                                      //     ShareAdScreen.routeName,
+                                      //     arguments: ShareAdsArgs(ad: ad)),
+                                      child: const CircleAvatar(
+                                        radius: 22.0,
+                                        backgroundColor: Colors.blue,
+                                        child: Icon(
+                                          FontAwesomeIcons.bullhorn,
+                                          color: Colors.white,
+                                          size: 20.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:prmt_promoter/widgets/bottom_nav_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prmt_promoter/blocs/auth/auth_bloc.dart';
+import 'package:prmt_promoter/repositories/ads/ads_repository.dart';
+import 'package:prmt_promoter/screens/my-earning/cubit/my_earnings_cubit.dart';
+import 'package:prmt_promoter/widgets/loading_indicator.dart';
+import '/widgets/bottom_nav_button.dart';
 
 class MyEarnings extends StatelessWidget {
   static const String routeName = '/myEarnings';
@@ -8,7 +13,13 @@ class MyEarnings extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (_) => const MyEarnings(),
+      builder: (_) => BlocProvider(
+        create: (context) => MyEarningsCubit(
+          adsRepository: context.read<AdsRepository>(),
+          authBloc: context.read<AuthBloc>(),
+        )..loadStats(),
+        child: const MyEarnings(),
+      ),
     );
   }
 
@@ -35,133 +46,141 @@ class MyEarnings extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      body: Column(
-        children: [
-          Stack(
+      body: BlocConsumer<MyEarningsCubit, MyEarningsState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state.status == MyEarningsStatus.loading) {
+            return const LoadingIndicator();
+          }
+          return Column(
             children: [
-              Image.asset(
-                'assets/images/background_bg.png',
-                width: double.infinity,
-                fit: BoxFit.cover,
-                height: 140.0,
+              Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/background_bg.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    height: 140.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 20.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: const [
+                            Text(
+                              '₹ 0',
+                              style: TextStyle(
+                                fontSize: 40.0,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              'Available earning',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                              ),
+                            )
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            SizedBox(height: 30.0),
+                            Text(
+                              '₹ 0',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            Text(
+                              'My all time earnings',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 20.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: const [
+              const SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    height: 90.0,
+                    width: 170.0,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade100.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
                         Text(
-                          '₹ 3,031',
-                          style: TextStyle(
-                            fontSize: 40.0,
+                          '${state.clickCount ?? 'N/A'}',
+                          style: const TextStyle(
+                            fontSize: 25.0,
                             fontWeight: FontWeight.w600,
-                            color: Colors.white,
                           ),
                         ),
+                        const SizedBox(height: 3.0),
                         Text(
-                          'Available earning',
+                          'Total Clicks',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
+                            color: Colors.grey.shade700,
+                            fontSize: 15.0,
                           ),
                         )
                       ],
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: const [
-                        SizedBox(height: 30.0),
+                  ),
+                  Container(
+                    height: 90.0,
+                    width: 170.0,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade100.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
                         Text(
-                          '₹30, 763',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.0,
+                          '${state.conversion ?? 'N/A'}',
+                          style: const TextStyle(
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
+                        const SizedBox(height: 3.0),
                         Text(
-                          'My all time earnings',
+                          'Total Conversion',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
+                            color: Colors.grey.shade700,
+                            fontSize: 15.0,
                           ),
                         )
                       ],
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 20.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                height: 90.0,
-                width: 170.0,
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade100.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      '3,763',
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.w600,
-                      ),
                     ),
-                    const SizedBox(height: 3.0),
-                    Text(
-                      'Total Clicks',
-                      style: TextStyle(
-                        color: Colors.grey.shade700,
-                        fontSize: 15.0,
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
-              Container(
-                height: 90.0,
-                width: 170.0,
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade100.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      '39',
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 3.0),
-                    Text(
-                      'Total Conversion',
-                      style: TextStyle(
-                        color: Colors.grey.shade700,
-                        fontSize: 15.0,
-                      ),
-                    )
-                  ],
-                ),
-              )
+              const SizedBox(height: 20.0),
+              const Divider(),
             ],
-          ),
-          const SizedBox(height: 20.0),
-          const Divider(),
-        ],
+          );
+        },
       ),
     );
   }
