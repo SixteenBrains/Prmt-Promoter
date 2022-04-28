@@ -2,6 +2,11 @@
 Business - https://xd.adobe.com/view/4e4866b6-cc1b-44cb-aa8d-6498dcc1e92f-1b1b/screen/a7ab34b7-3f79-4a6a-9f82-ec9699e801b3/specs/
 Promoter - https://xd.adobe.com/view/5718e1bc-e383-4758-b809-4df050133bca-024b/screen/c5dea4a9-4db0-4e8c-a7f3-c428c4a21d1d
 
+Razorpay 
+transfer to bank - https://razorpay.com/docs/api/payments/route/
+
+https://razorpay.com/docs/payments/route/
+
 
 https://pub.dev/packages/dart_code_metrics
 

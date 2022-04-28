@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:prmt_promoter/models/promoted_ad.dart';
-import 'package:prmt_promoter/models/promoter.dart';
+import '/models/promoted_ad.dart';
 import '/config/paths.dart';
 import '/models/ad.dart';
 import '/models/failure.dart';

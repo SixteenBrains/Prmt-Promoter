@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prmt_promoter/screens/profile/edit_profile.dart';
 import '/screens/profile/profile_screen.dart';
 import '/screens/live-ads/screens/share_ad.dart';
 import '/screens/registration/screens/registrations_screen.dart';
@@ -52,6 +53,9 @@ class CustomRouter {
 
       case ProfileScreen.routeName:
         return ProfileScreen.route();
+
+      case EditProfile.routeName:
+        return EditProfile.route();
 
       // case CreateAdScreen.routeName:
       //   return CreateAdScreen.route();

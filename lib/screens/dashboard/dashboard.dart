@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:prmt_promoter/screens/live-ads/live_ads_screen.dart';
+import '/screens/live-ads/live_ads_screen.dart';
 import '/screens/profile/profile_screen.dart';
 import '/screens/live-ads/widgets/label_icon.dart';
 import '/screens/live-ads/widgets/show_ad_media.dart';
@@ -193,18 +193,18 @@ class DashBoard extends StatelessWidget {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
+                                children: [
                                   Text(
-                                    '3,763',
-                                    style: TextStyle(
+                                    '${state.clickCount ?? 'N/A'}',
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 32.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                   Text(
-                                    '40',
-                                    style: TextStyle(
+                                    '${state.conversion ?? 'N/A'}',
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 32.0,
                                       fontWeight: FontWeight.w700,
@@ -238,89 +238,94 @@ class DashBoard extends StatelessWidget {
                   ),
                   const SizedBox(height: 10.0),
                   Expanded(
-                      child: ListView.builder(
-                          itemCount: state.promotedAds.length,
-                          itemBuilder: (context, index) {
-                            final promotedAd = state.promotedAds[index];
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10.0,
-                                //vertical: 5.0,
-                              ),
-                              child: Card(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 5.0),
-                                  child: ListTile(
-                                    leading: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: ShowAdMedia(
-                                        mediaType: promotedAd?.ad?.adType,
-                                        mediaUrl: promotedAd?.ad?.mediaUrl,
-                                        height: 50.0,
-                                        width: 50.0,
-                                      ),
+                      child: RefreshIndicator(
+                    onRefresh: () async => context
+                        .read<DashboardBloc>()
+                        .add(LoadUserPromotedAds()),
+                    child: ListView.builder(
+                        itemCount: state.promotedAds.length,
+                        itemBuilder: (context, index) {
+                          final promotedAd = state.promotedAds[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0,
+                              //vertical: 5.0,
+                            ),
+                            child: Card(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5.0),
+                                child: ListTile(
+                                  leading: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: ShowAdMedia(
+                                      mediaType: promotedAd?.ad?.adType,
+                                      mediaUrl: promotedAd?.ad?.mediaUrl,
+                                      height: 50.0,
+                                      width: 50.0,
                                     ),
-                                    title: Text(
-                                      promotedAd?.ad?.title ?? 'N/A',
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                    ),
-                                    subtitle: Padding(
-                                      padding: const EdgeInsets.only(top: 3.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          LabelIcon(
-                                            label: '172',
-                                            icon: Icons.done,
-                                          ),
-                                          LabelIcon(
-                                              label: '33',
-                                              icon: Icons.shopping_cart),
-                                          LabelIcon(
-                                            label: '12:45 hrs',
-                                            icon: Icons.lock_clock_outlined,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    trailing: GestureDetector(
-                                      onTap: () {
-                                        // showModalBottomSheet<void>(
-                                        //   context: context,
-                                        //   builder: (context) {
-                                        //     return BlocProvider(
-                                        //       create: (context) => AdsCubit(
-                                        //         adsRepository:
-                                        //             context.read<AdsRepository>(),
-                                        //         authBloc: context.read<AuthBloc>(),
-                                        //       ),
-                                        //       child: ShareIntent(ad: ad),
-                                        //     );
-                                        //   },
-                                        // );
-                                      },
-
-                                      //  => Navigator.of(context).pushNamed(
-                                      //     ShareAdScreen.routeName,
-                                      //     arguments: ShareAdsArgs(ad: ad)),
-                                      child: const CircleAvatar(
-                                        radius: 22.0,
-                                        backgroundColor: Colors.blue,
-                                        child: Icon(
-                                          FontAwesomeIcons.bullhorn,
-                                          color: Colors.white,
-                                          size: 20.0,
+                                  ),
+                                  title: Text(
+                                    promotedAd?.ad?.title ?? 'N/A',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                  subtitle: Padding(
+                                    padding: const EdgeInsets.only(top: 3.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: const [
+                                        LabelIcon(
+                                          label: '172',
+                                          icon: Icons.done,
                                         ),
+                                        LabelIcon(
+                                            label: '33',
+                                            icon: Icons.shopping_cart),
+                                        LabelIcon(
+                                          label: '12:45 hrs',
+                                          icon: Icons.lock_clock_outlined,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  trailing: GestureDetector(
+                                    onTap: () {
+                                      // showModalBottomSheet<void>(
+                                      //   context: context,
+                                      //   builder: (context) {
+                                      //     return BlocProvider(
+                                      //       create: (context) => AdsCubit(
+                                      //         adsRepository:
+                                      //             context.read<AdsRepository>(),
+                                      //         authBloc: context.read<AuthBloc>(),
+                                      //       ),
+                                      //       child: ShareIntent(ad: ad),
+                                      //     );
+                                      //   },
+                                      // );
+                                    },
+
+                                    //  => Navigator.of(context).pushNamed(
+                                    //     ShareAdScreen.routeName,
+                                    //     arguments: ShareAdsArgs(ad: ad)),
+                                    child: const CircleAvatar(
+                                      radius: 22.0,
+                                      backgroundColor: Colors.blue,
+                                      child: Icon(
+                                        FontAwesomeIcons.bullhorn,
+                                        color: Colors.white,
+                                        size: 20.0,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            );
-                          }))
+                            ),
+                          );
+                        }),
+                  ))
                 ],
               ),
             );

@@ -10,7 +10,6 @@ import 'widgets/label_icon.dart';
 import 'widgets/share_intent.dart';
 import 'widgets/show_ad_media.dart';
 
-// TODO: Work on live ads screen
 class LiveAdsScreen extends StatelessWidget {
   static const String routeName = '/liveAds';
   const LiveAdsScreen({Key? key}) : super(key: key);

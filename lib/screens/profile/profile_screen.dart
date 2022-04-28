@@ -10,6 +10,7 @@ import '/widgets/show_snackbar.dart';
 
 import '/blocs/auth/auth_bloc.dart';
 import 'cubit/profile_cubit.dart';
+import 'edit_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const String routeName = '/profile';
@@ -22,8 +23,7 @@ class ProfileScreen extends StatelessWidget {
         create: (context) => ProfileCubit(
           profileRepository: context.read<ProfileRepository>(),
           authBloc: context.read<AuthBloc>(),
-        ),
-        //..loadProfile(),
+        )..loadProfile(),
         child: const ProfileScreen(),
       ),
     );
@@ -37,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
       title: 'Crop and resize',
     );
     if (pickedImage != null) {
-      // context.read<ProfileCubit>().imagePicked(pickedImage);
+      context.read<ProfileCubit>().imagePicked(pickedImage);
     }
   }
 
@@ -142,7 +142,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
+                  horizontal: 15.0,
                   vertical: 20.0,
                 ),
                 child: Column(
@@ -150,59 +150,15 @@ class ProfileScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        GestureDetector(
-                          // onTap: () => Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (_) => const MyAds(),
-                          //   ),
-                          // ),
-                          child: Container(
-                            // height: 90.0,
-                            width: _canvas.width * 0.43,
-                            decoration: BoxDecoration(
-                              color: const Color(0xffF4F4F9),
-                              borderRadius: BorderRadius.circular(6.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0,
-                                vertical: 20.0,
-                              ),
-                              child: Row(
-                                children: [
-                                  const CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    child: Icon(
-                                      FontAwesomeIcons.bullhorn,
-                                      size: 20.0,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10.0),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        '4',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 20.0,
-                                        ),
-                                      ),
-                                      Text(
-                                        'My Ads',
-                                        style: TextStyle(fontSize: 16.0),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                        ProfileTile(
+                          onTap: () {},
+                          width: _canvas.width * 0.43,
+                          label: 'My\nEarnings',
+                          icon: Icons.currency_rupee,
                         ),
                         GestureDetector(
-                          // onTap: () => Navigator.of(context)
-                          //     .pushNamed(EditProfile.routeName),
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(EditProfile.routeName),
                           child: Container(
                             // height: 90.0,
                             width: _canvas.width * 0.43,
@@ -232,12 +188,18 @@ class ProfileScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: const [
                                       Text(
-                                        'My',
-                                        style: TextStyle(fontSize: 16.0),
+                                        'Profile',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15.0,
+                                        ),
                                       ),
                                       Text(
-                                        'Profile',
-                                        style: TextStyle(fontSize: 16.0),
+                                        'Details',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15.0,
+                                        ),
                                       )
                                     ],
                                   )
@@ -252,52 +214,17 @@ class ProfileScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        GestureDetector(
-                          // onTap: () => Navigator.of(context).push(
-                          //     MaterialPageRoute(
-                          //         builder: (_) => const MyNotifications())),
-                          child: Container(
-                            // height: 90.0,
-                            width: _canvas.width * 0.43,
-                            decoration: BoxDecoration(
-                              color: const Color(0xffF4F4F9),
-                              borderRadius: BorderRadius.circular(6.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0,
-                                vertical: 20.0,
-                              ),
-                              child: Row(
-                                children: [
-                                  const CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    child: Icon(Icons.notifications),
-                                  ),
-                                  const SizedBox(width: 10.0),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'My',
-                                        style: TextStyle(fontSize: 16.0),
-                                      ),
-                                      Text(
-                                        'Notificaton',
-                                        style: TextStyle(fontSize: 16.0),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                        ProfileTile(
+                          onTap: () {},
+                          width: _canvas.width * 0.43,
+                          label: 'My\nNotifications',
+                          icon: Icons.notifications,
                         ),
                         ProfileTile(
+                          onTap: () {},
                           width: _canvas.width * 0.43,
-                          label: 'Withdrawal History',
-                          icon: FontAwesomeIcons.timeline,
+                          label: 'Help &\nSupport',
+                          icon: Icons.question_mark,
                         )
                       ],
                     ),
@@ -305,18 +232,13 @@ class ProfileScreen extends StatelessWidget {
                     Row(
                       children: [
                         ProfileTile(
+                          onTap: () {},
                           width: _canvas.width * 0.43,
-                          label: 'Withdrawal History',
+                          label: 'Withdrawal\nHistory',
                           icon: FontAwesomeIcons.timeline,
                         )
                       ],
                     )
-                    //const Spacer(),
-                    // TextButton(
-                    //   onPressed: () {},
-                    //   child: const Text('Logout'),
-                    // ),
-                    // const SizedBox(height: 20.0),
                   ],
                 ),
               )
@@ -332,56 +254,53 @@ class ProfileTile extends StatelessWidget {
   final double width;
   final String label;
   final IconData icon;
+  final VoidCallback onTap;
 
   const ProfileTile({
     Key? key,
     required this.width,
     required this.label,
     required this.icon,
+    required this.onTap,
   }) : super(key: key);
 
   //
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // height: 90.0,
-      width: width,
-      decoration: BoxDecoration(
-        color: const Color(0xffF4F4F9),
-        borderRadius: BorderRadius.circular(6.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15.0,
-          vertical: 20.0,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        // height: 90.0,
+        width: width,
+        decoration: BoxDecoration(
+          color: const Color(0xffF4F4F9),
+          borderRadius: BorderRadius.circular(6.0),
         ),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(
-                icon,
-                //FontAwesomeIcons.timeline,
-                //FontAwesomeIcons.question,
-                size: 20.0,
-              ),
-            ),
-            const SizedBox(width: 10.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Help &',
-                  style: TextStyle(fontSize: 16.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12.0,
+            vertical: 20.0,
+          ),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(
+                  icon,
+                  size: 20.0,
                 ),
-                Text(
-                  'Support',
-                  style: TextStyle(fontSize: 16.0),
-                )
-              ],
-            )
-          ],
+              ),
+              const SizedBox(width: 10.0),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15.0,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

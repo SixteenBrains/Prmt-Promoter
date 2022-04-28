@@ -13,6 +13,7 @@ class Promoter extends Equatable {
   final List<String?> ageRange;
   final List<String?> incomeRange;
   final List<String?> interest;
+  final String? city;
 
   const Promoter({
     this.email,
@@ -26,6 +27,7 @@ class Promoter extends Equatable {
     this.ageRange = const [],
     this.incomeRange = const [],
     this.interest = const [],
+    this.city,
   });
 
   Promoter copyWith({
@@ -40,6 +42,7 @@ class Promoter extends Equatable {
     List<String?>? ageRange,
     List<String?>? incomeRange,
     List<String?>? interest,
+    String? city,
   }) {
     return Promoter(
       email: email ?? this.email,
@@ -53,6 +56,7 @@ class Promoter extends Equatable {
       ageRange: ageRange ?? this.ageRange,
       incomeRange: incomeRange ?? this.incomeRange,
       interest: interest ?? this.interest,
+      city: city ?? this.city,
     );
   }
 
@@ -69,6 +73,7 @@ class Promoter extends Equatable {
       'ageRange': ageRange,
       'incomeRange': incomeRange,
       'interest': interest,
+      'city': city,
     };
   }
 
@@ -114,12 +119,13 @@ class Promoter extends Equatable {
       incomeRange:
           data?['incomeRange'] != null ? List.from(data?['incomeRange']) : [],
       interest: data?['interest'] != null ? List.from(data?['interest']) : [],
+      city: data?['city'],
     );
   }
 
   @override
   String toString() {
-    return 'Promoter(email: $email, profileImg: $profileImg, name: $name, phoneNumber: $phoneNumber, promoterId: $promoterId, createdAt: $createdAt, state: $state, cities: $cities, ageRange: $ageRange, incomeRange: $incomeRange, interest: $interest)';
+    return 'Promoter(email: $email, profileImg: $profileImg, name: $name, phoneNumber: $phoneNumber, promoterId: $promoterId, createdAt: $createdAt, state: $state, cities: $cities, ageRange: $ageRange, incomeRange: $incomeRange, interest: $interest, city: $city)';
   }
 
   @override
@@ -136,6 +142,7 @@ class Promoter extends Equatable {
       ageRange,
       incomeRange,
       interest,
+      city
     ];
   }
 }

@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+//const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 // const functionsHttp = require('@google-cloud/functions-framework');
 // const escapeHtml = require('escape-html');
 
@@ -13,7 +14,7 @@ admin.initializeApp();
 
 
 exports.promote = functions.https
-.onRequest((req, res) => {
+.onRequest(async (req, res) => {
     // this funtion url - https://us-central1-<project-id>.cloudfunctions.net/date
     //https://us-central1-viewyourstories-4bf4d.cloudfunctions.net/date
      const dataQuery = req.query;
@@ -24,9 +25,22 @@ exports.promote = functions.https
 
      const adUrl = data.adUrl;
      const adId = data.adId;
-     const promoterId = data.p;
+     const promoterId = data.promoterId;
 
-     const type = typeof(data);
+    //  const adDoc = await admin.firestore().collection('promotedAds').doc(promoterId).collection('ads').doc(adId).get();
+    const adDoc =  admin.firestore().collection('promotedAds').doc(promoterId).collection('ads').doc(adId);
+
+    //  admin.FieldValue.increment
+     //await adDoc.update({'clickCount': 1})
+
+  ///  const reqData = adDoc.data();
+
+    await adDoc.update({'clickCount': admin.firestore.FieldValue.increment(1)}) 
+
+    
+
+
+
      
 
     //  const id = data;
@@ -47,9 +61,9 @@ exports.promote = functions.https
     // res.send(data);
 
     //res.send(data + queryData + body);
-    res.redirect(adUrl);
-
     // res.redirect(adUrl);
+    //res.send(adUrl);
+    res.redirect(adUrl);
     });
 
 

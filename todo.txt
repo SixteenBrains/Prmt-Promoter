@@ -1,4 +1,8 @@
-1. Calcualte number of click of link 
+Todo 
+1.Profile
+2.My earning
+
+1. Calcualte number of click of link  - done
 2. Calcualte number of conversion of link ( target link of the ad )
 
 
