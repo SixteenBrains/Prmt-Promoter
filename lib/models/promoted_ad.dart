@@ -10,6 +10,7 @@ class PromotedAd extends Equatable {
   final int? clickCount;
   final int? conversion;
   final String? authorId;
+  // final List<Stirng?
 
   const PromotedAd({
     this.ad,

@@ -31,8 +31,12 @@ class AdsRepository extends BaseAdRepostory {
     // required String? adId,
     required PromotedAd? promotedAd,
   }) async {
+    // Todo : change in promote ad repo
+
     try {
       if (promotedAd != null) {
+        await _firestore.collection(Paths.promotedAds).doc(promotedAd.ad?.adId);
+
         _firestore
             .collection(Paths.promotedAds)
             .doc(promotedAd.authorId)
