@@ -1,3 +1,4 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,9 +48,38 @@ class ShareIntent extends StatelessWidget {
 
     // print('Query ${query.toString()}');
 
+    final dynamicLinkParams = DynamicLinkParameters(
+        link: Uri.parse(affliateUrl),
+        uriPrefix: 'https://prmtbusiness.page.link',
+        androidParameters:
+            // not providing proper package name so that url will open on web
+            const AndroidParameters(packageName: 'com.sixteenbrains.none'),
+        iosParameters:
+            //Change according to ios
+            const IOSParameters(bundleId: 'com.sixteenbrains.none'),
+        navigationInfoParameters:
+            const NavigationInfoParameters(forcedRedirectEnabled: true));
+    final dynamicLink =
+        await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
+
+    // final dynamicLinkParams = DynamicLinkParameters(
+    //   link: Uri.parse('https://fluttergems.dev'),
+    //   uriPrefix: 'https://prmtbusiness.page.link',
+    //   androidParameters: const AndroidParameters(
+    //       packageName: 'com.sixteenbrains.prmt_promoter'),
+    //   iosParameters:
+    //       //Change according to ios
+    //       const IOSParameters(bundleId: 'com.sixteenbrains.prmt_promoter'),
+    // );
+    // final dynamicLink =
+    //     await FirebaseDynamicLinks.instance.buildLink(dynamicLinkParams);
+
+    print('Dynamic short link ${dynamicLink.shortUrl}');
+    final shortAdlink = dynamicLink.shortUrl.toString();
     final promotedAd = PromotedAd(
       ad: ad,
-      affiliateUrl: affliateUrl,
+      // affiliateUrl: affliateUrl,
+      affiliateUrl: shortAdlink,
       clickCount: 0,
       conversion: 0,
       authorId: authorId,
@@ -74,13 +104,14 @@ class ShareIntent extends StatelessWidget {
     }
     if (platform == SharePlatform.instagram) {
       Clipboard.setData(
-          ClipboardData(text: 'Check out\n${ad?.title}\n$affliateUrl'));
+          // ClipboardData(text: 'Check out\n${ad?.title}\n$affliateUrl'));
+          ClipboardData(text: 'Check out\n${ad?.title}\n$shortAdlink'));
     }
 
     final String? result = await SocialShareService.socialShare(
       platform,
       storyUrl: ad?.mediaUrl,
-      text: 'Check out\n${ad?.title}\n$affliateUrl',
+      text: 'Check out\n${ad?.title}\n$shortAdlink',
       mediaType: fileType,
     );
 
@@ -94,7 +125,7 @@ class ShareIntent extends StatelessWidget {
     //     false;
 
     print('Result of share $result');
-    if (result == 'succuss') {
+    if (result == 'success') {
       print('Shared ad');
       if (authorId != null) {
         print('this runs 1');
