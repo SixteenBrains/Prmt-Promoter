@@ -16,11 +16,23 @@ https://pub.dev/packages/dart_code_metrics
 
 Share Intents Plugins
 
+https://pub.dev/packages/flutter_share_me
+https://pub.dev/packages/esys_flutter_share/example
+https://www.dripcoding.com/flutter-open-whatsapp-and-send-text/
+https://rrtutors.com/tutorials/Flutter-Share-Text-and-Image-to-whatsapp
+https://morioh.com/p/42d9f5075e41
+https://www.digitalocean.com/community/tutorials/flutter-share-plugin
+https://pub.dev/packages/social_share
+https://pub.dev/packages/flutter_social_content_share
+https://pub.dev/packages/flutter_social_content_share
+
 https://pub.dev/packages/social_share
 https://pub.dev/packages/share_plus/example
 https://pub.dev/packages/flutter_social_content_share
 https://pub.dev/packages/esys_flutter_share
 https://developers.facebook.com/docs/plugins/share-button/
+
+
 
 FieldValue Firebase ( node )
 https://github.com/firebase/snippets-node/blob/94a076cf3db7f2954b1d8e332a89b72b7966c034/firestore/main/index.js

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:prmt_promoter/services/social_share_service.dart';
-import 'package:prmt_promoter/widgets/show_snackbar.dart';
+import '/services/social_share_service.dart';
+import '/widgets/show_snackbar.dart';
 import 'package:uuid/uuid.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/models/promoted_ad.dart';
@@ -70,6 +71,10 @@ class ShareIntent extends StatelessWidget {
 
       default:
         fileType = FileType.image;
+    }
+    if (platform == SharePlatform.instagram) {
+      Clipboard.setData(
+          ClipboardData(text: 'Check out\n${ad?.title}\n$affliateUrl'));
     }
 
     final String? result = await SocialShareService.socialShare(
@@ -253,8 +258,20 @@ class ShareIntent extends StatelessWidget {
                 bgColor: const Color(0xffD3698E),
                 icon: FontAwesomeIcons.instagram,
                 label: 'SHARE IN INSTAGRAM',
-                onTap: () async =>
-                    share(context, platform: SharePlatform.instagram),
+                onTap: () async {
+                  share(context, platform: SharePlatform.instagram);
+
+                  // FlutterSocialContentShare.share(
+                  //     type: ShareType.instagramWithImageUrl,
+                  //     quote: 'This is ad text',
+                  //     imageName: 'THhis is image name',
+                  //     url:
+                  //         'https://pub.dev/packages/flutter_social_content_share',
+                  //     imageUrl:
+                  //         "https://post.healthline.com/wp-content/uploads/2020/09/healthy-eating-ingredients-732x549-thumbnail-732x549.jpg");
+                },
+                //  =>
+                //     share(context, platform: SharePlatform.instagram),
               )
               // GestureDetector(
               //   onTap: () {
