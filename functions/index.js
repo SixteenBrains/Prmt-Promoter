@@ -30,6 +30,8 @@ exports.promote = functions.https
 
      const promoterId = dataQuery.promoterId;
 
+     // Todo work on expire ad 
+
     //  const querydata = dataQuery.data;
 
     //  const data =  JSON.parse(querydata);
@@ -40,12 +42,36 @@ exports.promote = functions.https
     //  const promoterId = data.promoterId;
 
     //  const adDoc = await admin.firestore().collection('promotedAds').doc(promoterId).collection('ads').doc(adId).get();
-    const adDoc =  admin.firestore().collection('promotedAds').doc(promoterId).collection('ads').doc(adId);
+    const promotedAdRef =  admin.firestore().collection('promotedAds').doc(promoterId).collection('ads').doc(adId);
+
+    // const adRef = admin.firestore().collection('ads').doc(adId);
+
+    // const adSnaps = await adRef.get();
+
+    // var today = new Date.now();
+
+   //      .where('endDate', isGreaterThanOrEqualTo: today)
+
+    //const today =  admin.database.ServerValue.TIMESTAMP;
+    //admin.firestore.FieldValue.serverTimestamp();
+//    admin.database.ServerValue.TIMESTAMP
+
+   // const endDate =  adSnaps.get('endDate');
+
+    //const isExpired = today.compareTo(endDate);
+
+
+
+
+
 
     // await adDoc.update({'clickCount': admin.firestore.FieldValue.increment(1)}) 
-    await adDoc.update({'clicks': admin.firestore.FieldValue.arrayUnion(shareId)}) 
+    await promotedAdRef.update({'clicks': admin.firestore.FieldValue.arrayUnion(shareId)}) 
 
     res.redirect(adUrl);
+
+   // res.send(today + endDate);
+   //res.send(typeof(endDate));
 
 
      
