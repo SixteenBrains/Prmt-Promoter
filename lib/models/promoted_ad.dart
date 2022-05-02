@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:prmt_promoter/config/paths.dart';
-
-import 'package:prmt_promoter/models/ad.dart';
+import '/config/paths.dart';
+import '/models/ad.dart';
 
 class PromotedAd extends Equatable {
   final Ad? ad;
@@ -10,7 +9,9 @@ class PromotedAd extends Equatable {
   final int? clickCount;
   final int? conversion;
   final String? authorId;
-  // final List<Stirng?
+  final List<String?> clicks;
+
+  final List<String?> promoters;
 
   const PromotedAd({
     this.ad,
@@ -18,6 +19,8 @@ class PromotedAd extends Equatable {
     this.clickCount,
     this.conversion,
     this.authorId,
+    this.promoters = const [],
+    this.clicks = const [],
   });
 
   PromotedAd copyWith({
@@ -26,6 +29,8 @@ class PromotedAd extends Equatable {
     int? clickCount,
     int? conversion,
     String? authorId,
+    List<String?>? promoters,
+    List<String?>? clicks,
   }) {
     return PromotedAd(
       ad: ad ?? this.ad,
@@ -33,6 +38,8 @@ class PromotedAd extends Equatable {
       clickCount: clickCount ?? this.clickCount,
       conversion: conversion ?? this.conversion,
       authorId: authorId ?? this.authorId,
+      promoters: promoters ?? this.promoters,
+      clicks: clicks ?? this.clicks,
     );
   }
 
@@ -43,6 +50,8 @@ class PromotedAd extends Equatable {
       'clickCount': clickCount,
       'conversion': conversion,
       'authorId': authorId,
+      'promoters': promoters,
+      'clicks': clicks,
     };
   }
 
@@ -57,23 +66,15 @@ class PromotedAd extends Equatable {
       clickCount: data?['clickCount']?.toInt(),
       conversion: data?['conversion']?.toInt(),
       authorId: data?['authorId'],
+      promoters:
+          data?['promoters'] != null ? List.from(data?['promoters']) : [],
+      clicks: data?['clicks'] != null ? List.from(data?['clicks']) : [],
     );
   }
 
-  // factory PromotedAd.fromMap(Map<String, dynamic> map) {
-
-  //   return PromotedAd(
-  //     ad: map['ad'] != null ? Ad.fromMap(map['ad']) : null,
-  //     adUrl: map['adUrl'],
-  //     clickCount: map['clickCount']?.toInt(),
-  //     conversion: map['conversion']?.toInt(),
-  //     authorId: map['authorId'],
-  //   );
-  // }
-
   @override
   String toString() {
-    return 'PromotedAd(ad: $ad, adUrl: $affiliateUrl, clickCount: $clickCount, conversion: $conversion, authorId: $authorId)';
+    return 'PromotedAd(ad: $ad, adUrl: $affiliateUrl, clickCount: $clickCount, conversion: $conversion, authorId: $authorId, clicks: $clicks)';
   }
 
   @override
@@ -84,6 +85,8 @@ class PromotedAd extends Equatable {
       clickCount,
       conversion,
       authorId,
+      promoters,
+      clicks,
     ];
   }
 }

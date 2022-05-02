@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:uuid/uuid.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/models/promoted_ad.dart';
 import '/screens/dashboard/dashboard.dart';
@@ -20,6 +21,7 @@ class ShareIntent extends StatelessWidget {
 
   void share(BuildContext context) async {
     final authorId = context.read<AuthBloc>().state.promoter?.promoterId;
+    final shareId = const Uuid().v4();
 
     // final query = jsonEncode({
     //   // ignore: prefer_single_quotes
@@ -37,7 +39,7 @@ class ShareIntent extends StatelessWidget {
     //   // we also add the platform where the ad got shared
     // };
     final affliateUrl =
-        'https://us-central1-prmt-business.cloudfunctions.net/promote?adId=${ad?.adId}&promoterId=$authorId&adUrl=${ad?.targetLink}';
+        'https://us-central1-prmt-business.cloudfunctions.net/promote?shareId=$shareId&adId=${ad?.adId}&promoterId=$authorId&adUrl=${ad?.targetLink}';
     // 'https://us-central1-prmt-business.cloudfunctions.net/promote?data=$query';
 
     // print('Query ${query.toString()}');
@@ -48,6 +50,7 @@ class ShareIntent extends StatelessWidget {
       clickCount: 0,
       conversion: 0,
       authorId: authorId,
+      clicks: const [],
     );
 
     final result = await ShareService.shareMedia(
@@ -59,9 +62,12 @@ class ShareIntent extends StatelessWidget {
 
     print('Result of share $result');
     if (result) {
-      final authorId = context.read<AuthBloc>().state.promoter?.promoterId;
-      if (authorId != null && ad != null) {
-        context.read<AdsCubit>().promoteAd(ad: ad, promotedAd: promotedAd);
+      print('Shared ad');
+      if (authorId != null) {
+        print('this runs 1');
+        context
+            .read<AdsCubit>()
+            .promoteAd(promotedAd: promotedAd, shareId: shareId);
       }
 
       // context.read<AdsCubit>().promoteAd(adId: ad?.adId);

@@ -1,9 +1,13 @@
 
+
 Business - https://xd.adobe.com/view/4e4866b6-cc1b-44cb-aa8d-6498dcc1e92f-1b1b/screen/a7ab34b7-3f79-4a6a-9f82-ec9699e801b3/specs/
 Promoter - https://xd.adobe.com/view/5718e1bc-e383-4758-b809-4df050133bca-024b/screen/c5dea4a9-4db0-4e8c-a7f3-c428c4a21d1d
 
 Razorpay 
 transfer to bank - https://razorpay.com/docs/api/payments/route/
+Linked account - https://razorpay.com/docs/payments/route/linked-account/
+Customer - https://razorpay.com/docs/api/customers/#create-a-customer
+
 
 https://razorpay.com/docs/payments/route/
 
@@ -17,6 +21,9 @@ https://pub.dev/packages/share_plus/example
 https://pub.dev/packages/flutter_social_content_share
 https://pub.dev/packages/esys_flutter_share
 https://developers.facebook.com/docs/plugins/share-button/
+
+FieldValue Firebase ( node )
+https://github.com/firebase/snippets-node/blob/94a076cf3db7f2954b1d8e332a89b72b7966c034/firestore/main/index.js
 
 visit this tutorial for share intent https://www.youtube.com/watch?v=bWehAFTFc9o&t=56s
 

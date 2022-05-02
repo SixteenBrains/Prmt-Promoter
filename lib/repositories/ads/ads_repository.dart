@@ -30,19 +30,66 @@ class AdsRepository extends BaseAdRepostory {
     // required String? userId,
     // required String? adId,
     required PromotedAd? promotedAd,
+    required String shareId,
   }) async {
-    // Todo : change in promote ad repo
+    /// Todo : change in promote ad repo
+    /// add promote in ad collection rep
 
     try {
       if (promotedAd != null) {
-        await _firestore.collection(Paths.promotedAds).doc(promotedAd.ad?.adId);
+        print('This runs');
+        // add if ad already in database, we will only update affliate link
 
-        _firestore
+        await _firestore
+            .collection(Paths.ads)
+            .doc(promotedAd.ad?.adId)
+            .collection(Paths.promoters)
+            .doc(promotedAd.authorId)
+            .set({});
+
+        final adRef = _firestore
             .collection(Paths.promotedAds)
             .doc(promotedAd.authorId)
             .collection(Paths.ads)
-            .doc(promotedAd.ad?.adId)
-            .set(promotedAd.toMap());
+            .doc(promotedAd.ad?.adId);
+
+        print('Documetn ref --- $adRef');
+
+        final DocumentSnapshot adSnap = await adRef.get();
+        print('Documetn snap --- $adSnap');
+
+        final adData = adSnap.data() as Map?;
+
+        print('Ad Data $adData');
+
+        final List clicks = adData?['clicks'] ?? [];
+
+        print('clicks $clicks');
+
+        if (adSnap.exists) {
+          // update document
+          print('Product exists ---');
+
+          await adRef.update({
+            'affiliateUrl': promotedAd.affiliateUrl,
+            'clicks': List.from(clicks)..remove(shareId),
+          });
+        } else {
+          print('Product donot exists ---');
+          await adRef.set(promotedAd.toMap());
+        }
+
+        // _firestore
+        //     .collection(Paths.promotedAds)
+        //     .doc(promotedAd.authorId)
+        //     .collection(Paths.ads)
+        //     .doc(promotedAd.ad?.adId)
+        //     .set(promotedAd.toMap());
+
+        // _firestore
+        //     .collection(Paths.promotedAds)
+        //     .doc(promotedAd.authorId)
+        //     .set({'id': promotedAd.authorId});
       }
     } catch (error) {
       print('Error in promoting ad ${error.toString()}');

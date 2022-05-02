@@ -13,12 +13,10 @@ class AdsCubit extends Cubit<AdsState> {
 
   AdsCubit({required AdsRepository adsRepository, required AuthBloc authBloc})
       : _adRepository = adsRepository,
-
         super(AdsState.initial());
 
   void fetchLiveAds() async {
     try {
-
       emit(state.copyWith(status: AdsStatus.loading));
 
       final ads = await _adRepository.getLiveAds();
@@ -29,12 +27,14 @@ class AdsCubit extends Cubit<AdsState> {
     }
   }
 
-  void promoteAd({required Ad? ad, required PromotedAd? promotedAd}) async {
+  void promoteAd(
+      {required PromotedAd? promotedAd, required String shareId}) async {
     try {
       emit(state.copyWith(status: AdsStatus.loading));
 
       await _adRepository.promoteAd(
         promotedAd: promotedAd,
+        shareId: shareId,
       );
       emit(state.copyWith(status: AdsStatus.adShared));
     } on Failure catch (failure) {

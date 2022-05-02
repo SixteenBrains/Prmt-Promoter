@@ -18,8 +18,11 @@ exports.promote = functions.https
     // this funtion url - https://us-central1-<project-id>.cloudfunctions.net/date
     //https://us-central1-viewyourstories-4bf4d.cloudfunctions.net/date
 
+     
 
      const dataQuery = req.query;
+
+     const shareId = dataQuery.shareId;
 
      const adUrl = dataQuery.adUrl;
 
@@ -39,7 +42,8 @@ exports.promote = functions.https
     //  const adDoc = await admin.firestore().collection('promotedAds').doc(promoterId).collection('ads').doc(adId).get();
     const adDoc =  admin.firestore().collection('promotedAds').doc(promoterId).collection('ads').doc(adId);
 
-    await adDoc.update({'clickCount': admin.firestore.FieldValue.increment(1)}) 
+    // await adDoc.update({'clickCount': admin.firestore.FieldValue.increment(1)}) 
+    await adDoc.update({'clicks': admin.firestore.FieldValue.arrayUnion(shareId)}) 
 
     res.redirect(adUrl);
 

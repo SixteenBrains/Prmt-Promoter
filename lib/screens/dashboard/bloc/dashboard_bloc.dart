@@ -31,7 +31,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         int conversion = 0;
 
         for (var item in promotedAds) {
-          clickCount += item?.clickCount ?? 0;
+          clickCount += item?.clicks.length ?? 0;
+          //clickCount ?? 0;
           conversion += item?.conversion ?? 0;
         }
 

@@ -1,3 +1,12 @@
+ques
+
+1. From where the ad link will come from ( affliate link)
+2. Click count
+3. conversion
+4. Wallet (withdrawal and payments)
+
+
+
 Todo 
 1.Profile
 2.My earning

@@ -1,0 +1,3 @@
+Razorpay public apis - https://www.postman.com/razorpaydev/workspace/razorpay-public-workspace/collection/12492020-952c7295-118c-400f-8f2c-5266ef6f689a?ctx=documentation
+
+Payouts - https://razorpay.com/docs/x/payouts/
