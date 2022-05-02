@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:prmt_promoter/services/social_share_service.dart';
+import 'package:prmt_promoter/widgets/show_snackbar.dart';
 import 'package:uuid/uuid.dart';
 import '/blocs/auth/auth_bloc.dart';
 import '/models/promoted_ad.dart';
@@ -8,7 +11,6 @@ import '/screens/dashboard/dashboard.dart';
 import '/screens/live-ads/cubit/ads_cubit.dart';
 import '/enums/enums.dart';
 import '/models/ad.dart';
-import '/services/share_service.dart';
 import '/screens/live-ads/widgets/social_share_btn.dart';
 
 import 'label_icon.dart';
@@ -19,7 +21,7 @@ class ShareIntent extends StatelessWidget {
 
   const ShareIntent({Key? key, required this.ad}) : super(key: key);
 
-  void share(BuildContext context) async {
+  void share(BuildContext context, {required SharePlatform platform}) async {
     final authorId = context.read<AuthBloc>().state.promoter?.promoterId;
     final shareId = const Uuid().v4();
 
@@ -53,15 +55,41 @@ class ShareIntent extends StatelessWidget {
       clicks: const [],
     );
 
-    final result = await ShareService.shareMedia(
-          storyUrl: ad?.mediaUrl,
-          text: affliateUrl,
-          mediaType: ad?.adType ?? MediaType.none,
-        ) ??
-        false;
+    FileType fileType;
+
+    switch (ad?.adType) {
+      case MediaType.image:
+        fileType = FileType.image;
+
+        break;
+
+      case MediaType.video:
+        fileType = FileType.video;
+
+        break;
+
+      default:
+        fileType = FileType.image;
+    }
+
+    final String? result = await SocialShareService.socialShare(
+      platform,
+      storyUrl: ad?.mediaUrl,
+      text: 'Check out\n${ad?.title}\n$affliateUrl',
+      mediaType: fileType,
+    );
+
+    print('Result of share $share');
+
+    // final result = await ShareService.shareMedia(
+    //       storyUrl: ad?.mediaUrl,
+    //       text: affliateUrl,
+    //       mediaType: ad?.adType ?? MediaType.none,
+    //     ) ??
+    //     false;
 
     print('Result of share $result');
-    if (result) {
+    if (result == 'succuss') {
       print('Shared ad');
       if (authorId != null) {
         print('this runs 1');
@@ -69,10 +97,11 @@ class ShareIntent extends StatelessWidget {
             .read<AdsCubit>()
             .promoteAd(promotedAd: promotedAd, shareId: shareId);
       }
-
-      // context.read<AdsCubit>().promoteAd(adId: ad?.adId);
-      Navigator.of(context).pushNamed(DashBoard.routeName);
+    } else {
+      ShowSnackBar.showSnackBar(context,
+          title: result, backgroundColor: Colors.orangeAccent);
     }
+    Navigator.of(context).pushNamed(DashBoard.routeName);
   }
 
   @override
@@ -187,13 +216,15 @@ class ShareIntent extends StatelessWidget {
                 icon: FontAwesomeIcons.whatsappSquare,
                 label: 'SHARE IN WHATSAPP',
                 //onTap: showShareIntent,
-                onTap: () async => share(context),
+                onTap: () async =>
+                    share(context, platform: SharePlatform.whatsapp),
               ),
               SocialShareBtn(
                 bgColor: const Color(0xff2588E7),
                 icon: FontAwesomeIcons.facebookSquare,
                 label: 'SHARE IN FACEBOOK',
-                onTap: () async => share(context),
+                onTap: () async =>
+                    share(context, platform: SharePlatform.facebook),
                 // onTap: () async {
                 //   ShareService.shareMedia(
                 //     storyUrl: ad?.mediaUrl,
@@ -222,7 +253,8 @@ class ShareIntent extends StatelessWidget {
                 bgColor: const Color(0xffD3698E),
                 icon: FontAwesomeIcons.instagram,
                 label: 'SHARE IN INSTAGRAM',
-                onTap: () async => share(context),
+                onTap: () async =>
+                    share(context, platform: SharePlatform.instagram),
               )
               // GestureDetector(
               //   onTap: () {

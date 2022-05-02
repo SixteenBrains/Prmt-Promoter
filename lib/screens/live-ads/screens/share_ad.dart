@@ -6,7 +6,6 @@ import '/screens/live-ads/widgets/metrics_widget.dart';
 import '/utils/url_to_file.dart';
 import '/widgets/loading_indicator.dart';
 import '/models/ad.dart';
-import 'package:social_share/social_share.dart';
 
 class ShareAdsArgs {
   final Ad? ad;
@@ -148,8 +147,8 @@ class _ShareAdScreenState extends State<ShareAdScreen> {
                     const SizedBox(height: 20.0),
                     GestureDetector(
                       onTap: () {
-                        SocialShare.shareOptions('Hello world',
-                            imagePath: _file!.path);
+                        // SocialShare.shareOptions('Hello world',
+                        //     imagePath: _file!.path);
                         //SocialShare.shareWhatsapp(content)
                       },
                       child: Image.asset('assets/images/whatsapp-btn.png'),
